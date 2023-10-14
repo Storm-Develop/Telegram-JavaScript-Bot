@@ -7,7 +7,7 @@ const axios = require("axios");
 if (fs.existsSync(".env")) {
   require("dotenv").config();
 }
-const openaiApiKey = 'YOUR_OPENAI_API_KEY'; // Replace with your OpenAI API key
+const openaiApiKey = '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';
 const botToken = process.env.BOT_TOKEN;
 
 if (!botToken) {
