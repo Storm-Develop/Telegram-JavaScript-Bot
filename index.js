@@ -49,7 +49,7 @@ async function start() {
     bot.sendMessage(chatId, 'You can start by sending me information about the job you are applying for.');
   });
 
-  bot.on('text', (msg) => {
+  bot.onText('coverletter', (msg) => {
     const chatId = msg.chat.id;
     const userInput = msg.text;
   
