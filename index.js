@@ -2,13 +2,13 @@ const { Bot, GrammyError, HttpError } = require("grammy");
 const { autoQuote } = require("@roziscoding/grammy-autoquote");
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
 if (fs.existsSync(".env")) {
   require("dotenv").config();
 }
-const openaiApiKey = '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';
+const openaiApiKey = 'YOUR_OPENAI_API_KEY'; // Replace with your OpenAI API key
 const botToken = process.env.BOT_TOKEN;
-const openai = require('openai');
 
 if (!botToken) {
   throw new Error("BOT_TOKEN is not set in environment variables! Exiting...");
@@ -56,19 +56,22 @@ async function start() {
     const userInput = msg.text;
   
     // Generate a cover letter using GPT-3
-    openai.apiKey = openaiApiKey;
-    openai.Completion.create({
-      engine: 'text-davinci-002',
+    axios.post('https://api.openai.com/v1/engines/text-davinci-002/completions', {
       prompt: `Write a cover letter for a job application: ${userInput}`,
       max_tokens: 150,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${openaiApiKey}`,
+        'Content-Type': 'application/json',
+      }
     })
       .then((response) => {
-        const coverLetter = response.choices[0].text;
-        bot.sendMessage(chatId, coverLetter);
+        const coverLetter = response.data.choices[0].text;
+        bot.api.sendMessage(chatId, coverLetter);
       })
       .catch((error) => {
         console.error(error);
-        bot.sendMessage(chatId, 'Sorry, I encountered an error while generating the cover letter.');
+        bot.api.sendMessage(chatId, 'Sorry, I encountered an error while generating the cover letter.');
       });
   });
   
