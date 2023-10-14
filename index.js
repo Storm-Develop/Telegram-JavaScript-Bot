@@ -8,6 +8,8 @@ if (fs.existsSync(".env")) {
 }
 const openaiApiKey = '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';
 const botToken = process.env.BOT_TOKEN;
+const openai = require('openai');
+
 if (!botToken) {
   throw new Error("BOT_TOKEN is not set in environment variables! Exiting...");
 }
