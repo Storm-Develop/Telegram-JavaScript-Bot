@@ -6,7 +6,7 @@ const path = require("path");
 if (fs.existsSync(".env")) {
   require("dotenv").config();
 }
-
+const openaiApiKey = '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';
 const botToken = process.env.BOT_TOKEN;
 if (!botToken) {
   throw new Error("BOT_TOKEN is not set in environment variables! Exiting...");
@@ -40,6 +40,36 @@ async function start() {
     ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
   );
 
+  bot.onText(/\/start/, (msg) => {
+    bot.sendMessage(msg.chat.id, 'Welcome to the Cover Letter Generator bot! Please send me some information to get started.');
+  });
+
+  bot.onText(/\/help/, (msg) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, 'You can start by sending me information about the job you are applying for.');
+  });
+
+  bot.on('text', (msg) => {
+    const chatId = msg.chat.id;
+    const userInput = msg.text;
+  
+    // Generate a cover letter using GPT-3
+    openai.apiKey = openaiApiKey;
+    openai.Completion.create({
+      engine: 'text-davinci-002',
+      prompt: `Write a cover letter for a job application: ${userInput}`,
+      max_tokens: 150,
+    })
+      .then((response) => {
+        const coverLetter = response.choices[0].text;
+        bot.sendMessage(chatId, coverLetter);
+      })
+      .catch((error) => {
+        console.error(error);
+        bot.sendMessage(chatId, 'Sorry, I encountered an error while generating the cover letter.');
+      });
+  });
+  
   bot.catch((err) => {
     const ctx = err.ctx;
     console.error(`Error while handling update ${ctx.update.update_id}:`);
