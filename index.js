@@ -36,20 +36,20 @@ async function start() {
     }
   }
 
-  bot.command("start", (ctx) =>
-    ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
-  );
+  // bot.command("start", (ctx) =>
+  //   ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
+  // );
 
-  bot.onText(/\/start/, (msg) => {
+  bot.onText("start", (msg) => {
     bot.sendMessage(msg.chat.id, 'Welcome to the Cover Letter Generator bot! Please send me some information to get started.');
   });
 
-  bot.onText(/\/help/, (msg) => {
+  bot.onText("help", (msg) => {
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, 'You can start by sending me information about the job you are applying for.');
   });
 
-  bot.onText('coverletter', (msg) => {
+  bot.onText("coverletter", (msg) => {
     const chatId = msg.chat.id;
     const userInput = msg.text;
   
