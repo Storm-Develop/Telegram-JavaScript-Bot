@@ -15,9 +15,12 @@ module.exports = {
     try {
       // Define the user's request (you can customize this prompt)
       const userRequest = "I am applying for the position of software developer.";
-
+     
+      const configuration = new Configuration({
+        apiKey: process.env.OPENAI_TOKEN,
+      });
       // Create an instance of the OpenAI API
-      const openai = new OpenAIApi({ key: openaiApiKey });
+      const openai = new OpenAIApi(configuration);
 
       // Define the parameters for generating a completion
       const params = {
