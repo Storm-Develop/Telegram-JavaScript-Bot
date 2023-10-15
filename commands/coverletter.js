@@ -36,7 +36,7 @@ module.exports = {
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
     } catch (error) {
-      console.error(error.stack); // Log the error, including the stack trace
+      console.info(error.stack); // Log the error, including the stack trace
       await ctx.reply("Sorry, there was an error generating the cover letter: " + error.message);
     }
   },
