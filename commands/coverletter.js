@@ -16,7 +16,7 @@ module.exports = {
     try {
       // Define the user's request (you can customize this prompt)
       const userRequest = "I am applying for the position of software developer.";
-  
+      console.info("HERE is my API Key"+openaiApiKey);
       // Create a new instance of the OpenAI API
       const openai = new OpenAIApi({
         key: openaiApiKey,
@@ -37,7 +37,7 @@ module.exports = {
       await ctx.reply(coverLetter);
     } catch (error) {
       console.error(error); // Log the error
-      await ctx.reply("Sorry, there was an error generating the cover letter." + error.message);
+      await ctx.reply("Sorry, there was an error generating the cover letter." + error.stack);
     }
   },
 };
