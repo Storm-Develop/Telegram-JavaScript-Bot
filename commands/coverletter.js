@@ -15,7 +15,7 @@ module.exports = {
       const userRequest = "I am applying for the position of software developer.";
      
       // Create an instance of the OpenAI API
-      const openai = new OpenAI({
+      const openai = new OpenAIApi({
         apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
       });
 
