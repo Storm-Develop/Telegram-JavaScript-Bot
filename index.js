@@ -40,6 +40,11 @@ async function start() {
     ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
   );
 
+    // Register the coverletter command
+    bot.command(coverletterCommand.name, async (ctx) => {
+      await coverletterCommand.handler(ctx);
+    });
+
   bot.catch((err) => {
     const ctx = err.ctx;
     console.error(`Error while handling update ${ctx.update.update_id}:`);
