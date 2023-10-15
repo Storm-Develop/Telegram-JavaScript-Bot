@@ -1,4 +1,4 @@
-const {OpenAIApi } = require("openai");
+const {OpenAI } = require("openai");
 
 
 module.exports = {
@@ -15,23 +15,26 @@ module.exports = {
       const userRequest = "I am applying for the position of software developer.";
      
       // Create an instance of the OpenAI API
-      const openai = new OpenAIApi({
+      const openai = new OpenAI({
         apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
       });
 
       // Define the parameters for generating a completion
-      const params = {
-        engine: "davinci",
-        prompt: `Write a cover letter: ${userRequest}`,
-        temperature: 0.7, // Adjust for randomness
-        max_tokens: 150, // Adjust for length
-      };
+    //   const params = {
+    //     engine: "davinci",
+    //     prompt: `Write a cover letter: ${userRequest}`,
+    //     temperature: 0.7, // Adjust for randomness
+    //     max_tokens: 150, // Adjust for length
+    //   };
 
       // Generate a cover letter using OpenAI's GPT-3
-      const response = await openai.createCompletion(params);
-
+      //const response = await openai.chat.completions.create(params);
+      const response = await openai.chat.completions.create({
+        messages: [{ role: 'user', content: `Write a cover letter: ${userRequest}` }],
+        model: 'gpt-3.5-turbo',max_tokens:100
+      });
       // Get the generated cover letter from the API response
-      const coverLetter = response.choices[0].text;
+      const coverLetter = response.choices[0].message;
 
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
