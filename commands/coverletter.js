@@ -1,7 +1,8 @@
 const { OpenAIApi } = require('openai');
 
 // Replace with your OpenAI API key
-const openaiApiKey = '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';
+const openaiApiKey = process.env.OPENAI_TOKEN;
+
 
 module.exports = {
   name: "coverletter",
