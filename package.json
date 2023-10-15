@@ -17,5 +17,8 @@
     "openai": "^4.12.1",
     "path": "^0.12.7"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.1",
+  "devDependencies": {
+    "openapi": "^1.0.1"
+  }
 }
