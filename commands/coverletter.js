@@ -12,11 +12,11 @@ module.exports = {
   category: "Cover Letter",
   handler: async (ctx) => {
     const { message } = ctx;
-    
+  
     try {
       // Define the user's request (you can customize this prompt)
       const userRequest = "I am applying for the position of software developer.";
-
+  
       // Create a new instance of the OpenAI API
       const openai = new OpenAIApi({
         key: openaiApiKey,
@@ -24,21 +24,20 @@ module.exports = {
         temperature: 0.7, // Adjust for randomness
         max_tokens: 150, // Adjust for length
       });
-
+  
       // Generate a cover letter using OpenAI's GPT-3
       const response = await openai.createCompletion({
         prompt: `Write a cover letter: ${userRequest}`,
       });
-
+  
       // Get the generated cover letter from the API response
       const coverLetter = response.choices[0].text;
-
+  
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
     } catch (error) {
-        console.error(error);
-        console.error(response); // Log the response object
-        await ctx.reply("Sorry, there was an error generating the cover letter." + error.message);
+      console.error(error); // Log the error
+      await ctx.reply("Sorry, there was an error generating the cover letter." + error.message);
     }
   },
 };
