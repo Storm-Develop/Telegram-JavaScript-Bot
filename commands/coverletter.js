@@ -1,7 +1,5 @@
-const { Configuration, OpenAIApi } = require("openai");
+const {OpenAIApi } = require("openai");
 
-// Replace with your OpenAI API key
-const openaiApiKey = process.env.OPENAI_TOKEN;
 
 module.exports = {
   name: "coverletter",
@@ -16,11 +14,10 @@ module.exports = {
       // Define the user's request (you can customize this prompt)
       const userRequest = "I am applying for the position of software developer.";
      
-      const configuration = new Configuration({
-        apiKey: process.env.OPENAI_TOKEN,
-      });
       // Create an instance of the OpenAI API
-      const openai = new OpenAIApi(configuration);
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
+      });
 
       // Define the parameters for generating a completion
       const params = {
