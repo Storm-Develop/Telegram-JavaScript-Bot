@@ -2,6 +2,7 @@ const { Bot, GrammyError, HttpError } = require("grammy");
 const { autoQuote } = require("@roziscoding/grammy-autoquote");
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
 if (fs.existsSync(".env")) {
   require("dotenv").config();
@@ -11,6 +12,7 @@ const botToken = process.env.BOT_TOKEN;
 if (!botToken) {
   throw new Error("BOT_TOKEN is not set in environment variables! Exiting...");
 }
+const coverletterCommand = require('./commands/coverletter');
 
 async function start() {
   const bot = new Bot(botToken);
@@ -41,9 +43,9 @@ async function start() {
   );
 
     // Register the coverletter command
-    bot.command(coverletterCommand.name, async (ctx) => {
+  bot.command(coverletterCommand.name, async (ctx) => {
       await coverletterCommand.handler(ctx);
-    });
+  });
 
   bot.catch((err) => {
     const ctx = err.ctx;
