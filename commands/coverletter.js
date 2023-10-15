@@ -37,7 +37,7 @@ module.exports = {
       await ctx.reply(coverLetter);
     } catch (error) {
       console.error(error);
-      await ctx.reply("Sorry, there was an error generating the cover letter.");
+      await ctx.reply("Sorry, there was an error generating the cover letter." + error.message);
     }
   },
 };
