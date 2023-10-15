@@ -1,4 +1,5 @@
-const {OpenAIApi } = require("openai");
+//const {OpenAIApi } = require("openai");
+import OpenAIApi from 'openai';
 
 
 module.exports = {
