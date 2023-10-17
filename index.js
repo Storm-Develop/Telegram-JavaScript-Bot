@@ -21,6 +21,8 @@ const coverletterCommand = require('./commands/coverletter');
 async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
+  bot.use(conversations());
+  bot.use(createConversation(coverletter));
 
   const commandFilesDir = path.resolve(__dirname, "commands");
   const commandFiles = fs
@@ -47,7 +49,7 @@ async function start() {
   );
 
     // Register the coverletter command
-  bot.command(coverletterCommand.name, async (conversation,ctx) => {
+  bot.command(coverletterCommand.name, async (ctx) => {
       await coverletterCommand.handler(ctx);
   });
 

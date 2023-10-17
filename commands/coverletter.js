@@ -15,11 +15,11 @@ module.exports = {
         apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
       });
 
-      const chatId = ctx.chat.id;
+      //const chatId = ctx.chat.id;
       await ctx.reply('Welcome! Please enter the job posting description.');
 
       // Start a conversation
-      const conversation = ctx.conversation(chatId);
+      const conversation = ctx.conversation(coverletter);
       
       // Wait for the user to send the job posting description
       const userResponse = await conversation.wait();
