@@ -58,7 +58,7 @@ async function start() {
   /** Defines the conversation cover letter*/
   async function coverletter_chat(conversation, ctx) {
     // TODO: code the conversation
-    await coverletterCommand.handler(ctx);
+    await coverletterCommand.handler(ctx,conversation);
   }
 
   bot.catch((err) => {

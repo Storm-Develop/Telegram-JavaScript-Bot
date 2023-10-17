@@ -6,7 +6,7 @@ module.exports = {
   usage: "/coverletter",
   example: "/coverletter",
   category: "Cover Letter",
-  handler: async (ctx) => {    
+  handler: async (ctx,conversation) => {    
     try {
       // Create an instance of the OpenAI API
       const openai = new OpenAI({
@@ -21,7 +21,7 @@ module.exports = {
    //  await conversation.enter("coverletter_chat");
 
       // Wait for the user to send the job posting description
-      const userResponse = await ctx.conversation.wait();
+      const userResponse = await conversation.wait();
       
       if (!userResponse || !userResponse.text) {
         await ctx.reply('Invalid job posting description. Please try again.');
