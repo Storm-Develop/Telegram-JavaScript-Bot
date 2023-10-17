@@ -6,9 +6,7 @@ module.exports = {
   usage: "/coverletter",
   example: "/coverletter",
   category: "Cover Letter",
-  handler: async (conversation,ctx) => {
-    const { message } = ctx;
-    
+  handler: async (conversation,ctx) => {    
     try {
       // Create an instance of the OpenAI API
       const openai = new OpenAI({
