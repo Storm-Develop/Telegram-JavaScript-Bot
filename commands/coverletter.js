@@ -1,5 +1,4 @@
-const {OpenAI } = require("openai");
-
+const { OpenAI } = require("openai");
 
 module.exports = {
   name: "coverletter",
@@ -7,15 +6,24 @@ module.exports = {
   usage: "/coverletter",
   example: "/coverletter",
   category: "Cover Letter",
-  handler: async (conversation,ctx) => {
-
+  handler: async (ctx) => {
+    const { message } = ctx;
+    
     try {
+      // Create an instance of the OpenAI API
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
+      });
 
       const chatId = ctx.chat.id;
       await ctx.reply('Welcome! Please enter the job posting description.');
-      //ctx.conv
+
+      // Start a conversation
+      const conversation = ctx.conversation(chatId);
+      
       // Wait for the user to send the job posting description
-      const { userResponse } = await conversation.wait();
+      const userResponse = await conversation.wait();
+      
       if (!userResponse || !userResponse.text) {
         await ctx.reply('Invalid job posting description. Please try again.');
         return;
@@ -23,27 +31,18 @@ module.exports = {
 
       const jobPostingDescription = userResponse.text;
 
-      // Define the user's request (you can customize this prompt)
-     // const userRequest = "I am applying for the position of software developer.";
-     
-      // Create an instance of the OpenAI API
-      const openai = new OpenAI({
-        apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
-      });
       // Define the parameters for generating a completion
-
-
-      // Generate a cover letter using OpenAI's GPT-3
-      //const response = await openai.chat.completions.create(params);
-      const response = await openai.chat.completions.create({
+      const response = await openai.chat.create({
+        model: 'gpt-3.5-turbo',
         messages: [
-        {role: "user", content: jobPostingDescription },
-        {role: "system", content: "You are a helpful assistant that writes cover letters." },
-        { role: "assistant", content: `Write a cover letter: ${jobPostingDescription}` }],
-         model: 'gpt-3.5-turbo',max_tokens:50
+          { role: 'system', content: 'You are a helpful assistant that writes cover letters.' },
+          { role: 'user', content: jobPostingDescription },
+          { role: 'assistant', content: `Write a cover letter: ${jobPostingDescription}` },
+        ],
       });
+
       // Get the generated cover letter from the API response
-      const coverLetter = response.choices[1].message;
+      const coverLetter = response.data.choices[0].message.content;
 
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
