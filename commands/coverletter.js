@@ -39,6 +39,7 @@ module.exports = {
           { role: 'user', content: jobPostingDescription },
           { role: 'assistant', content: `Write a cover letter: ${jobPostingDescription}` },
         ],
+        max_tokens:50
       });
       console.log(response.choices);
 
