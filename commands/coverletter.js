@@ -6,7 +6,7 @@ module.exports = {
   usage: "/coverletter",
   example: "/coverletter",
   category: "Cover Letter",
-  handler: async (ctx) => {
+  handler: async (conversation,ctx) => {
     const { message } = ctx;
     
     try {
@@ -19,8 +19,8 @@ module.exports = {
       await ctx.reply('Welcome! Please enter the job posting description.');
 
       // Start a conversation
-      const conversation = ctx.conversation("coverletter_chat");
-      await conversation.enter("coverletter_chat");
+     // const conversation = ctx.conversation("coverletter_chat");
+   //  await conversation.enter("coverletter_chat");
 
       // Wait for the user to send the job posting description
       const userResponse = await conversation.wait();

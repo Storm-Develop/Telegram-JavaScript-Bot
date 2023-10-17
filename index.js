@@ -48,10 +48,17 @@ async function start() {
     ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
   );
 
-    // Register the coverletter command
+  // Register the coverletter command
   bot.command(coverletterCommand.name, async (ctx) => {
-      await coverletterCommand.handler(ctx);
+      //await coverletterCommand.handler(ctx);
+      await ctx.conversation.enter("coverletter_chat");
   });
+
+  /** Defines the conversation cover letter*/
+  async function coverletter_chat(conversation, ctx) {
+    // TODO: code the conversation
+    await coverletterCommand.handler(conversation,ctx);
+  }
 
   bot.catch((err) => {
     const ctx = err.ctx;
