@@ -8,7 +8,6 @@ module.exports = {
   example: "/coverletter",
   category: "Cover Letter",
   handler: async (conversation,ctx) => {
-    const { message } = ctx;
 
     try {
 
