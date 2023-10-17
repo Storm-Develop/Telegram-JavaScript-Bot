@@ -42,12 +42,12 @@ async function start() {
     }
   }
 
-  bot.command("start", (conversation,ctx) =>
+  bot.command("start", (ctx) =>
     ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
   );
 
     // Register the coverletter command
-  bot.command(coverletterCommand.name, async (ctx) => {
+  bot.command(coverletterCommand.name, async (conversation,ctx) => {
       await coverletterCommand.handler(ctx);
   });
 
