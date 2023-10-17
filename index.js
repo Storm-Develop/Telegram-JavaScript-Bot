@@ -61,7 +61,7 @@ async function start() {
     await ctx.reply("Hi there! What is your name?");
     const { message } = await conversation.wait();
     await ctx.reply(`Welcome to the chat, ${message.text}!`);  
-    await coverletterCommand.handler(ctx,conversation);
+    //await coverletterCommand.handler(ctx,conversation);
   }
 
   bot.catch((err) => {
