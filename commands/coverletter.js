@@ -22,11 +22,11 @@ module.exports = {
 
       // Wait for the user to send the job posting description
       const userResponse  = await conversation.wait();
-      console.info(userResponse.message);
       if (!userResponse || !userResponse.message || !userResponse.message.text) {
         await ctx.reply('Invalid job posting description. Please try again.');
         return;
       }
+      console.info(userResponse.message);
 
       const jobPostingDescription = userResponse.message.text;
 
@@ -39,9 +39,10 @@ module.exports = {
           { role: 'assistant', content: `Write a cover letter: ${jobPostingDescription}` },
         ],
       });
+      console.log(response.choices);
 
       // Get the generated cover letter from the API response
-      const coverLetter = response.data.choices[0].message.content;
+      const coverLetter = response.choices[0].message.content;
 
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
