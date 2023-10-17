@@ -33,10 +33,47 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@deno/shim-deno-test@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@deno/shim-deno-test@npm:0.4.0"
+  checksum: 37397110e88f7f0f450f2e44a529ca1b240f5063783cc2e29b740ddd653ecca628a3764b935069569bd8a2830dad8ba1460351579a723e81e346eff420622708
+  languageName: node
+  linkType: hard
+
+"@deno/shim-deno@npm:~0.16.1":
+  version: 0.16.1
+  resolution: "@deno/shim-deno@npm:0.16.1"
+  dependencies:
+    "@deno/shim-deno-test": ^0.4.0
+    which: ^2.0.2
+  checksum: 35f08fd7a09e958128cee5a167f6a16b17fd36b0b973a6ac0fed0cea7314180ea4fbc464e82b27d5b70d5ebfbedba1a111c4f6c9bff8bfea52f22e85342d72c9
+  languageName: node
+  linkType: hard
+
+"@grammyjs/conversations@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@grammyjs/conversations@npm:1.1.2"
+  dependencies:
+    "@grammyjs/types": ^3.1.1
+    debug: ^4.3.4
+    o-son: ^1.0.1
+  peerDependencies:
+    grammy: ^1.10.0
+  checksum: fd9c5fd0ba5cfaaa1ef8cefe93040d23be03f785df0e9b7dec42b6f76096f3cc3b0db17ad7262540eac7c48cb38b706bcb48b4d0d806483c15bd6fbecc0378be
+  languageName: node
+  linkType: hard
+
 "@grammyjs/types@npm:3.1.2":
   version: 3.1.2
   resolution: "@grammyjs/types@npm:3.1.2"
   checksum: afbf678ca14079e16d37c7b721c90eb90a5d18110b331e49980b4f88966c85995ce1b97a0c64226949f1bdd208ce8b62b348a9b2d2197c2c98ec1925697e752a
+  languageName: node
+  linkType: hard
+
+"@grammyjs/types@npm:^3.1.1":
+  version: 3.3.0
+  resolution: "@grammyjs/types@npm:3.3.0"
+  checksum: f8bdf49dc366497dc1fc4744a5784a575e7a24d4d8c654bd0952e7adce60d3aa16c94336fda6ec48e1c8ca5a195608e44d82a41d7eb752bdfbb170ced5653771
   languageName: node
   linkType: hard
 
@@ -585,6 +622,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isexe@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "isexe@npm:2.0.0"
+  checksum: 26bf6c5480dda5161c820c5b5c751ae1e766c587b1f951ea3fcfc973bafb7831ae5b54a31a69bd670220e42e99ec154475025a468eae58ea262f813fdc8d1c62
+  languageName: node
+  linkType: hard
+
 "jest-diff@npm:^26.0.0":
   version: 26.6.2
   resolution: "jest-diff@npm:26.6.2"
@@ -729,6 +773,15 @@ __metadata:
     encoding:
       optional: true
   checksum: 3bc1655203d47ee8e313c0d96664b9673a3d4dd8002740318e9d27d14ef306693a4b2ef8d6525775056fd912a19e23f3ac0d7111ad8925877b7567b29a625592
+  languageName: node
+  linkType: hard
+
+"o-son@npm:^1.0.1":
+  version: 1.0.2
+  resolution: "o-son@npm:1.0.2"
+  dependencies:
+    "@deno/shim-deno": ~0.16.1
+  checksum: 8eaa5a05cc1ea024c0789f61702df6ea86149d59f3f571f5ae70b24b7e140388408a0895630db97fa158019a3b5eeb897b2932a0b0714393c5dde51a194e48e9
   languageName: node
   linkType: hard
 
@@ -948,6 +1001,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "telegram-javascript-bot@workspace:."
   dependencies:
+    "@grammyjs/conversations": ^1.1.2
     "@roziscoding/grammy-autoquote": ^1.1.2
     axios: ^1.5.1
     dotenv: ^16.3.1
@@ -1037,6 +1091,17 @@ __metadata:
     tr46: ~0.0.3
     webidl-conversions: ^3.0.0
   checksum: b8daed4ad3356cc4899048a15b2c143a9aed0dfae1f611ebd55073310c7b910f522ad75d727346ad64203d7e6c79ef25eafd465f4d12775ca44b90fa82ed9e2c
+  languageName: node
+  linkType: hard
+
+"which@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "which@npm:2.0.2"
+  dependencies:
+    isexe: ^2.0.0
+  bin:
+    node-which: ./bin/node-which
+  checksum: 1a5c563d3c1b52d5f893c8b61afe11abc3bab4afac492e8da5bde69d550de701cf9806235f20a47b5c8fa8a1d6a9135841de2596535e998027a54589000e66d1
   languageName: node
   linkType: hard
 
