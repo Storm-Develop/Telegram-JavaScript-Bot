@@ -21,6 +21,7 @@ const coverletterCommand = require('./commands/coverletter');
 async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
+  bot.use(session({ initial: () => ({}) }));
   bot.use(conversations());
   bot.use(createConversation(coverletter_chat));
 
