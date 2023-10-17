@@ -58,6 +58,9 @@ async function start() {
   /** Defines the conversation cover letter*/
   async function coverletter_chat(conversation, ctx) {
     // TODO: code the conversation
+    await ctx.reply("Hi there! What is your name?");
+    const { message } = await conversation.wait();
+    await ctx.reply(`Welcome to the chat, ${message.text}!`);  
     await coverletterCommand.handler(ctx,conversation);
   }
 
