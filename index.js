@@ -3,6 +3,10 @@ const { autoQuote } = require("@roziscoding/grammy-autoquote");
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
+const {
+  conversations,
+  createConversation,
+} = require("@grammyjs/conversations");
 
 if (fs.existsSync(".env")) {
   require("dotenv").config();
@@ -38,7 +42,7 @@ async function start() {
     }
   }
 
-  bot.command("start", (ctx) =>
+  bot.command("start", (conversation,ctx) =>
     ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
   );
 

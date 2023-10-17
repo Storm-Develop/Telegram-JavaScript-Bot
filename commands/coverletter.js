@@ -7,14 +7,14 @@ module.exports = {
   usage: "/coverletter",
   example: "/coverletter",
   category: "Cover Letter",
-  handler: async (ctx) => {
+  handler: async (conversation,ctx) => {
     const { message } = ctx;
 
     try {
 
       const chatId = ctx.chat.id;
       await ctx.reply('Welcome! Please enter the job posting description.');
-
+      //ctx.conv
       // Wait for the user to send the job posting description
       const { userResponse } = await conversation.wait();
       if (!userResponse || !userResponse.text) {
