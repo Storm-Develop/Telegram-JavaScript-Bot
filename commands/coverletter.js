@@ -21,8 +21,8 @@ module.exports = {
    //  await conversation.enter("coverletter_chat");
 
       // Wait for the user to send the job posting description
-      const userResponse = await conversation.wait();
-      
+      const {userResponse}  = await conversation.wait();
+      console.info(userResponse.text);
       if (!userResponse || !userResponse.text) {
         await ctx.reply('Invalid job posting description. Please try again.');
         return;
