@@ -22,13 +22,13 @@ module.exports = {
 
       // Wait for the user to send the job posting description
       const userResponse  = await conversation.wait();
-      console.info(userResponse);
-      if (!userResponse || !userResponse.text) {
+      console.info(userResponse.message);
+      if (!userResponse || !userResponse.message || !userResponse.message.text) {
         await ctx.reply('Invalid job posting description. Please try again.');
         return;
       }
 
-      const jobPostingDescription = userResponse.text;
+      const jobPostingDescription = userResponse.message.text;
 
       // Define the parameters for generating a completion
       const response = await openai.chat.create({
