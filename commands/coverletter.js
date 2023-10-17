@@ -16,7 +16,7 @@ module.exports = {
       await ctx.reply('Welcome! Please enter the job posting description.');
 
       // Wait for the user to send the job posting description
-      const { userResponse } = await ctx.conversation.wait();
+      const { userResponse } = await conversation.wait();
       if (!userResponse || !userResponse.text) {
         await ctx.reply('Invalid job posting description. Please try again.');
         return;
