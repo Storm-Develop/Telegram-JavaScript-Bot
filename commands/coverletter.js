@@ -19,7 +19,7 @@ module.exports = {
       await ctx.reply('Welcome! Please enter the job posting description.');
 
       // Start a conversation
-      const conversation = ctx.conversation(coverletter);
+      const conversation = ctx.conversation("coverletter");
       
       // Wait for the user to send the job posting description
       const userResponse = await conversation.wait();
