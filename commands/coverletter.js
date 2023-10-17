@@ -29,6 +29,7 @@ module.exports = {
       console.info(userResponse.message);
 
       const jobPostingDescription = userResponse.message.text;
+      await ctx.reply('Generating cover letter, please wait.');
 
       // Define the parameters for generating a completion
       const response = await openai.chat.completions.create({
