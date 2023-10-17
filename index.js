@@ -22,7 +22,7 @@ async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
   bot.use(conversations());
-  bot.use(createConversation(coverletter));
+  bot.use(createConversation(coverletter_chat));
 
   const commandFilesDir = path.resolve(__dirname, "commands");
   const commandFiles = fs
