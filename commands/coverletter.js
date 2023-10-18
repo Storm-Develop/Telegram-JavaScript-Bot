@@ -26,7 +26,7 @@ module.exports = {
       console.info(userResponse.message);
 
       const jobPostingDescription = userResponse.message.text; 
-      const resumeDescription = ctx.session.userResume;     
+      let resumeDescription = ctx.session.userResume;     
       console.warn(`Existing Resume ${ctx.session.userResume}`);
 
       // if (ctx.session.userResume === '')
