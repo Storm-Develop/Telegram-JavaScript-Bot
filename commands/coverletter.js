@@ -27,7 +27,7 @@ module.exports = {
 
       const jobPostingDescription = userResponse.message.text;
       let resumeDescription = '';
-      if (ctx.userResume === '')
+      if (ctx.userResume === 'undefined')
       {
         await ctx.reply('Please enter your resume.');
 
@@ -36,6 +36,7 @@ module.exports = {
           await ctx.reply('Invalid resume description. Please try again.');
           return;
         }
+        ctx.userResume = resumeResponse.message.text;
         resumeDescription = resumeResponse.message.text;
       }
 
@@ -45,7 +46,6 @@ module.exports = {
       }
 
       console.info("RESUME Description" + resumeDescription);
-      console.info("CTX RESUME" + ctx.userResume);
       await ctx.reply('Generating cover letter, please wait.');
 
       // Define the parameters for generating a completion
