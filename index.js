@@ -75,7 +75,7 @@ async function start() {
   {
     if (ctx.session.userResume === '')
     {
-      await ctx.reply('Please enter your resume.');
+      await ctx.reply('Welcome! Please enter your resume.');
 
       const resumeResponse  = await conversation.wait();
       if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
@@ -90,7 +90,7 @@ async function start() {
     else
     {
       resumeDescription = ctx.session.userResume;
-    } 
+    }
   }
 
   bot.catch((err) => {
