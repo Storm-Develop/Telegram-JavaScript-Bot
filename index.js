@@ -1,5 +1,7 @@
 const { Bot, GrammyError, HttpError, Context, session } = require("grammy");
 const { autoQuote } = require("@roziscoding/grammy-autoquote");
+import { freeStorage } from "@grammyjs/storage-free";
+
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
@@ -21,7 +23,11 @@ const coverletterCommand = require('./commands/coverletter');
 async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
-  bot.use(session({ initial: createInitialSessionData }));
+  bot.use(session({
+    initial: createInitialSessionData,
+    storage: freeStorage(botToken),
+  }));
+  //bot.use(session({ initial: createInitialSessionData }));
   bot.use(conversations());
   bot.use(createConversation(coverletter_chat));
 
@@ -45,7 +51,6 @@ async function start() {
   //   }
   // }
   function createInitialSessionData() {
-    console.warn("User resume is getting reset");
     return {
       userResume: '',
       // more data here
@@ -63,6 +68,8 @@ async function start() {
 
   /** Defines the conversation cover letter*/
   async function coverletter_chat(conversation, ctx) {
+    console.warn("ctx resume value is "+ ctx.session.userResume);
+    console.warn("Getting into the new conversation");
     await coverletterCommand.handler(conversation,ctx);
   }
 

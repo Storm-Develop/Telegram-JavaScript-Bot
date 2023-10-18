@@ -63,7 +63,7 @@ module.exports = {
           { role: 'user', content: `Job description: ${jobPostingDescription} and resume: ${resumeDescription}` },
           { role: 'assistant', content: `Write a cover letter: ${jobPostingDescription} with the folllowing resume ${resumeDescription} ` },
         ],
-        max_tokens:200
+        max_tokens:50
       });
       console.log(response.choices);
 
