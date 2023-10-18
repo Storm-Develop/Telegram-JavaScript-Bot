@@ -67,7 +67,7 @@ async function start() {
 
   /** Defines the conversation cover letter*/
   async function coverletter_chat(conversation, ctx) {
-    await UpdateResume(ctx);
+    //await UpdateResume(ctx);
     await coverletterCommand.handler(conversation,ctx);
   }
 
