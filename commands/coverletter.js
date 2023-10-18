@@ -29,28 +29,28 @@ module.exports = {
       
       let resumeDescription = '';
       
-      console.warn(`Existing Resume ${ctx.session.userResume}`);
+      //console.warn(`Existing Resume ${ctx.session.userResume}`);
 
-      if (ctx.session.userResume === '')
-      {
-        await ctx.reply('Please enter your resume.');
+      // if (ctx.session.userResume === '')
+      // {
+      await ctx.reply('Please enter your resume.');
 
-        const resumeResponse  = await conversation.wait();
-        if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
+      const resumeResponse  = await conversation.wait();
+      if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
           await ctx.reply('Invalid resume description. Please try again.');
           return;
         }
 
-        ctx.session.userResume = resumeResponse.message.text;
-        console.warn(`CTX Session is updated the value to ${ctx.session.userResume}`);
+      //  ctx.session.userResume = resumeResponse.message.text;
+       // console.warn(`CTX Session is updated the value to ${ctx.session.userResume}`);
 
-        resumeDescription = ctx.session.userResume;
-      }
+        resumeDescription = resumeResponse.message.text;
+      // }
 
-      else
-      {
-        resumeDescription = ctx.session.userResume;
-      }
+      // else
+      // {
+      //   resumeDescription = ctx.session.userResume;
+      // }
 
       console.info("RESUME Description" + resumeDescription);
       await ctx.reply('Generating cover letter, please wait.');

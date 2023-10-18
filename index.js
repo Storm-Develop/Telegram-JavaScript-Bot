@@ -24,7 +24,7 @@ async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
   bot.use(session({
-    initial: () => ({ userResume: '', pizzaCount: 0}),
+    initial: () => ({ }),
     storage: freeStorage(botToken),
   }));
   //bot.use(session({ initial: createInitialSessionData }));
@@ -50,11 +50,7 @@ async function start() {
   //     }
   //   }
   // }
-  bot.hears(/.*🍕.*/, (ctx) => ctx.session.pizzaCount++);
-  bot.command("hunger", async (ctx) => {
-    const count = ctx.session.pizzaCount;
-    await ctx.reply(`Your hunger level is ${count}!`);
-  });
+
   bot.command("cancel", async (ctx) => {
     await ctx.conversation.exit();
     await ctx.reply("Leaving.");
@@ -71,8 +67,7 @@ async function start() {
 
   /** Defines the conversation cover letter*/
   async function coverletter_chat(conversation, ctx) {
-    console.warn("ctx resume value is "+ ctx.session.userResume);
-    console.warn("Getting into the new conversation");
+    //console.warn("ctx resume value is "+ ctx.session.userResume);
     await coverletterCommand.handler(conversation,ctx);
   }
 
