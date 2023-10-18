@@ -24,7 +24,7 @@ async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
   bot.use(session({
-    initial: () => ({ userResume: ''}),
+    initial: () => ({ userResume: '',}),
     storage: freeStorage(botToken),
   }));
   //bot.use(session({ initial: createInitialSessionData }));
