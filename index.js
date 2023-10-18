@@ -51,7 +51,10 @@ async function start() {
   //   }
   // }
   bot.hears(/.*🍕.*/, (ctx) => ctx.session.pizzaCount++);
-
+  bot.command("hunger", async (ctx) => {
+    const count = ctx.session.pizzaCount;
+    await ctx.reply(`Your hunger level is ${count}!`);
+  });
   bot.command("cancel", async (ctx) => {
     await ctx.conversation.exit();
     await ctx.reply("Leaving.");
