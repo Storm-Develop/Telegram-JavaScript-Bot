@@ -44,8 +44,8 @@ module.exports = {
         resumeDescription = ctx.userResume;
       }
 
-      console.info(resumeDescription);
-      
+      console.info("RESUME Description" + resumeDescription);
+      console.info("CTX RESUME" + ctx.userResume);
       await ctx.reply('Generating cover letter, please wait.');
 
       // Define the parameters for generating a completion
