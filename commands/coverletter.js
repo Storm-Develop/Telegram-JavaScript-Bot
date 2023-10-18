@@ -13,7 +13,7 @@ module.exports = {
         apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
       });
 
-      await ctx.reply('Please enter the job posting description.');
+      await ctx.reply('Welcome! Please enter the job posting description.');
 
       // Start a conversation
 
