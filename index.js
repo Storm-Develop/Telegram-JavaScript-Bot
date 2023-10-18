@@ -24,7 +24,7 @@ async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
   bot.use(session({
-    initial: () => ({ userResume: '', pizzaCount: 0}),
+    initial: () => ({ userResume: '',}),
     storage: freeStorage(botToken),
   }));
   //bot.use(session({ initial: createInitialSessionData }));
@@ -50,11 +50,7 @@ async function start() {
   //     }
   //   }
   // }
-  bot.hears(/.*🍕.*/, (ctx) => ctx.session.pizzaCount++);
-  bot.command("hunger", async (ctx) => {
-    const count = ctx.session.pizzaCount;
-    await ctx.reply(`Your hunger level is ${count}!`);
-  });
+
   bot.command("cancel", async (ctx) => {
     await ctx.conversation.exit();
     await ctx.reply("Leaving.");
@@ -72,7 +68,27 @@ async function start() {
   /** Defines the conversation cover letter*/
   async function coverletter_chat(conversation, ctx) {
     console.warn("ctx resume value is "+ ctx.session.userResume);
-    console.warn("Getting into the new conversation");
+    if (ctx.session.userResume === '')
+      {
+        await ctx.reply('Please enter your resume.');
+
+        const resumeResponse  = await conversation.wait();
+        if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
+          await ctx.reply('Invalid resume description. Please try again.');
+          return;
+        }
+
+        ctx.session.userResume = resumeResponse.message.text;
+        console.warn(`CTX Session is updated the value to ${ctx.session.userResume}`);
+        resumeDescription = ctx.session.userResume;
+      }
+    else
+    {
+      resumeDescription = ctx.session.userResume;
+    }
+
+      console.info("RESUME Description" + resumeDescription);
+
     await coverletterCommand.handler(conversation,ctx);
   }
 
