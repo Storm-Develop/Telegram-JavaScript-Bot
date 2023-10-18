@@ -1,6 +1,6 @@
 const { Bot, GrammyError, HttpError, Context, session } = require("grammy");
 const { autoQuote } = require("@roziscoding/grammy-autoquote");
-import { freeStorage } from "@grammyjs/storage-free";
+const { freeStorage } = require("@grammyjs/storage-free");
 
 const fs = require("fs");
 const path = require("path");
