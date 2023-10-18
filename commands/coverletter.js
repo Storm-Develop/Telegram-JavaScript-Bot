@@ -2,7 +2,7 @@ const { OpenAI } = require("openai");
 
 module.exports = {
   name: "coverletter",
-  description: "Generate a random cover letter response",
+  description: "Generate a cover letter response using your resume as a reference.",
   usage: "/coverletter",
   example: "/coverletter",
   category: "Cover Letter",
@@ -28,6 +28,9 @@ module.exports = {
       const jobPostingDescription = userResponse.message.text;
       
       let resumeDescription = '';
+      
+      console.warn(`Existing Resume ${ctx.session.userResume}`);
+
       if (ctx.session.userResume === '')
       {
         await ctx.reply('Please enter your resume.');
@@ -37,6 +40,7 @@ module.exports = {
           await ctx.reply('Invalid resume description. Please try again.');
           return;
         }
+        
         ctx.session.userResume = resumeResponse.message.text;
         resumeDescription = ctx.session.userResume;
       }
