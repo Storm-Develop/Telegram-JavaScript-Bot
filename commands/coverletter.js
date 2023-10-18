@@ -40,8 +40,10 @@ module.exports = {
           await ctx.reply('Invalid resume description. Please try again.');
           return;
         }
-        
+
         ctx.session.userResume = resumeResponse.message.text;
+        console.warn(`CTX Session is updated the value to ${ctx.session.userResume}`);
+
         resumeDescription = ctx.session.userResume;
       }
 
