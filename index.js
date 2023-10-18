@@ -24,7 +24,7 @@ async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
   bot.use(session({
-    initial: () => ({ userResume: '' }),
+    initial: () => ({ userResume: '', pizzaCount: 0}),
     storage: freeStorage(botToken),
   }));
   //bot.use(session({ initial: createInitialSessionData }));
@@ -50,6 +50,7 @@ async function start() {
   //     }
   //   }
   // }
+  bot.hears(/.*🍕.*/, (ctx) => ctx.session.pizzaCount++);
 
   bot.command("cancel", async (ctx) => {
     await ctx.conversation.exit();
