@@ -13,12 +13,9 @@ module.exports = {
         apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
       });
 
-      //const chatId = ctx.chat.id;
       await ctx.reply('Welcome! Please enter the job posting description.');
 
       // Start a conversation
-     // const conversation = ctx.conversation("coverletter_chat");
-   //  await conversation.enter("coverletter_chat");
 
       // Wait for the user to send the job posting description
       const userResponse  = await conversation.wait();
@@ -29,6 +26,26 @@ module.exports = {
       console.info(userResponse.message);
 
       const jobPostingDescription = userResponse.message.text;
+      const resumeDescription = '';
+      if (ctx.userResume=='')
+      {
+        await ctx.reply('Please enter your resume.');
+
+        const resumeResponse  = await conversation.wait();
+        if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
+          await ctx.reply('Invalid resume description. Please try again.');
+          return;
+        }
+        resumeDescription = resumeResponse.message.text;
+      }
+
+      else
+      {
+        resumeDescription = ctx.userResume;
+      }
+
+      console.info(resumeDescription);
+      
       await ctx.reply('Generating cover letter, please wait.');
 
       // Define the parameters for generating a completion
@@ -37,7 +54,7 @@ module.exports = {
         messages: [
           { role: 'system', content: 'You are a helpful assistant that writes cover letters.' },
           { role: 'user', content: jobPostingDescription },
-          { role: 'assistant', content: `Write a cover letter: ${jobPostingDescription}` },
+          { role: 'assistant', content: `Write a cover letter: ${jobPostingDescription} with the folllowing resume ${resumeDescription} ` },
         ],
         max_tokens:50
       });

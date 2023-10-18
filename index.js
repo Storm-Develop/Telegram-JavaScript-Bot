@@ -21,14 +21,14 @@ const coverletterCommand = require('./commands/coverletter');
 async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
-  bot.use(session({ initial: () => ({}) }));
+  bot.use(session({ initial: createInitialSessionData }));
   bot.use(conversations());
   bot.use(createConversation(coverletter_chat));
 
-  const commandFilesDir = path.resolve(__dirname, "commands");
-  const commandFiles = fs
-    .readdirSync(commandFilesDir)
-    .filter((file) => file.endsWith(".js"));
+  // const commandFilesDir = path.resolve(__dirname, "commands");
+  // const commandFiles = fs
+  //   .readdirSync(commandFilesDir)
+  //   .filter((file) => file.endsWith(".js"));
 
   // for (const file of commandFiles) {
   //   const command = require(path.join(commandFilesDir, file));
@@ -44,6 +44,12 @@ async function start() {
   //     }
   //   }
   // }
+  function createInitialSessionData() {
+    return {
+      userResume: '',
+      // more data here
+    };
+  }
 
   bot.command("start", (ctx) =>
     ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
