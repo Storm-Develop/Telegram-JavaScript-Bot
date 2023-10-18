@@ -1,6 +1,8 @@
 const { Bot, GrammyError, HttpError, Context, session } = require("grammy");
 const { autoQuote } = require("@roziscoding/grammy-autoquote");
 const { freeStorage } = require("@grammyjs/storage-free");
+const coverletterCommand = require('./commands/coverletter');
+const botToken = process.env.BOT_TOKEN;
 
 const fs = require("fs");
 const path = require("path");
@@ -14,17 +16,15 @@ if (fs.existsSync(".env")) {
   require("dotenv").config();
 }
 
-const botToken = process.env.BOT_TOKEN;
 if (!botToken) {
   throw new Error("BOT_TOKEN is not set in environment variables! Exiting...");
 }
-const coverletterCommand = require('./commands/coverletter');
 
 async function start() {
   const bot = new Bot(botToken);
   bot.use(autoQuote);
   bot.use(session({
-    initial: createInitialSessionData,
+    initial: () => ({ userResume: '' }),
     storage: freeStorage(botToken),
   }));
   //bot.use(session({ initial: createInitialSessionData }));
@@ -50,12 +50,11 @@ async function start() {
   //     }
   //   }
   // }
-  function createInitialSessionData() {
-    return {
-      userResume: '',
-      // more data here
-    };
-  }
+
+  bot.command("cancel", async (ctx) => {
+    await ctx.conversation.exit();
+    await ctx.reply("Leaving.");
+  });
 
   bot.command("start", (ctx) =>
     ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
