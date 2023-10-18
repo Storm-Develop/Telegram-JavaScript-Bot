@@ -26,8 +26,9 @@ module.exports = {
       console.info(userResponse.message);
 
       const jobPostingDescription = userResponse.message.text;
+      
       let resumeDescription = '';
-      if (ctx.userResume === 'undefined')
+      if (ctx.session.userResume === '')
       {
         await ctx.reply('Please enter your resume.');
 
@@ -36,13 +37,13 @@ module.exports = {
           await ctx.reply('Invalid resume description. Please try again.');
           return;
         }
-        ctx.userResume = resumeResponse.message.text;
-        resumeDescription = resumeResponse.message.text;
+        ctx.session.userResume = resumeResponse.message.text;
+        resumeDescription = ctx.session.userResume;
       }
 
       else
       {
-        resumeDescription = ctx.userResume;
+        resumeDescription = ctx.session.userResume;
       }
 
       console.info("RESUME Description" + resumeDescription);
@@ -56,7 +57,7 @@ module.exports = {
           { role: 'user', content: jobPostingDescription },
           { role: 'assistant', content: `Write a cover letter: ${jobPostingDescription} with the folllowing resume ${resumeDescription} ` },
         ],
-        max_tokens:50
+        max_tokens:200
       });
       console.log(response.choices);
 
