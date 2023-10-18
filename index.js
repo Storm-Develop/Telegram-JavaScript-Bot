@@ -57,16 +57,11 @@ async function start() {
 
   // Register the coverletter command
   bot.command(coverletterCommand.name, async (ctx) => {
-      //await coverletterCommand.handler(ctx);
       await ctx.conversation.enter("coverletter_chat");
   });
 
   /** Defines the conversation cover letter*/
   async function coverletter_chat(conversation, ctx) {
-    // TODO: code the conversation
-    await ctx.reply("Hi there! What is your name?");
-    const { message } = await conversation.wait();
-    await ctx.reply(`Welcome to the chat, ${message.text}!`);  
     await coverletterCommand.handler(conversation,ctx);
   }
 

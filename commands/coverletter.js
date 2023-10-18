@@ -26,8 +26,8 @@ module.exports = {
       console.info(userResponse.message);
 
       const jobPostingDescription = userResponse.message.text;
-      const resumeDescription = '';
-      if (ctx.userResume=='')
+      let resumeDescription = '';
+      if (ctx.userResume === '')
       {
         await ctx.reply('Please enter your resume.');
 
