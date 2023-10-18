@@ -63,6 +63,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@grammyjs/storage-free@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@grammyjs/storage-free@npm:2.4.0"
+  dependencies:
+    node-fetch: ^2.6.6
+  checksum: 8698a0d61dd37fa726ebdaa2d64b335ab62d6fe0c08cf85557e0428fee1db959967a3115c41305b96145ee93b94eb027a2a90812035602acff04d8682bc8e621
+  languageName: node
+  linkType: hard
+
 "@grammyjs/types@npm:3.1.2":
   version: 3.1.2
   resolution: "@grammyjs/types@npm:3.1.2"
@@ -748,7 +757,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.6, node-fetch@npm:^2.6.7":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -1002,6 +1011,7 @@ __metadata:
   resolution: "telegram-javascript-bot@workspace:."
   dependencies:
     "@grammyjs/conversations": ^1.1.2
+    "@grammyjs/storage-free": ^2.4.0
     "@roziscoding/grammy-autoquote": ^1.1.2
     axios: ^1.5.1
     dotenv: ^16.3.1
