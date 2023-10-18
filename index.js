@@ -45,6 +45,7 @@ async function start() {
   //   }
   // }
   function createInitialSessionData() {
+    console.warn("User resume is getting reset");
     return {
       userResume: '',
       // more data here
