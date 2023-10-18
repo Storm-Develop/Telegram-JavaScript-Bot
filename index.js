@@ -67,30 +67,29 @@ async function start() {
 
   /** Defines the conversation cover letter*/
   async function coverletter_chat(conversation, ctx) {
-    await UpdateResume(ctx);
-    await coverletterCommand.handler(conversation,ctx);
-  }
-
-  async function UpdateResume(ctx)
-  {
+    console.warn("ctx resume value is "+ ctx.session.userResume);
     if (ctx.session.userResume === '')
-    {
-      await ctx.reply('Please enter your resume.');
+      {
+        await ctx.reply('Please enter your resume.');
 
-      const resumeResponse  = await conversation.wait();
-      if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
-        await ctx.reply('Invalid resume description. Please try again.');
-        return;
+        const resumeResponse  = await conversation.wait();
+        if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
+          await ctx.reply('Invalid resume description. Please try again.');
+          return;
+        }
+
+        ctx.session.userResume = resumeResponse.message.text;
+        console.warn(`CTX Session is updated the value to ${ctx.session.userResume}`);
+        resumeDescription = ctx.session.userResume;
       }
-
-      ctx.session.userResume = resumeResponse.message.text;
-      console.warn(`CTX Session is updated the value to ${ctx.session.userResume}`);
-      resumeDescription = ctx.session.userResume;
-    }
     else
     {
       resumeDescription = ctx.session.userResume;
-    } 
+    }
+
+      console.info("RESUME Description" + resumeDescription);
+
+    await coverletterCommand.handler(conversation,ctx);
   }
 
   bot.catch((err) => {
