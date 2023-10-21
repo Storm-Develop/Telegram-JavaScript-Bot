@@ -129,8 +129,9 @@ async function createCoverLetterPDF(coverLetterText, filename) {
         try {
           const pdfBytes = await pdfDoc.save();
           fs.writeFileSync(filename, pdfBytes);
-          console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
-          let filenamePDF = filename +".pdf";
+          let filenamePDF = filename + ".pdf";
+          console.info(`PDF Cover letter generation completed. File saved as ${filenamePDF}`);
+
           await ctx.replyWithDocument({ source: filenamePDF });
         } catch (error) {
           console.error("Error while generating and sending the PDF:", error);
