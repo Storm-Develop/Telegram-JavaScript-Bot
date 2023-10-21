@@ -122,16 +122,16 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
           },
           fonts: {
             Arial: {
-              normal: 'Arial', // Define the 'normal' style for 'Arial' font
-              bold: 'Arial-Bold', // Define the 'bold' style for 'Arial' font
-              italics: 'Arial-Italic', // Define the 'italics' style for 'Arial' font
-              bolditalics: 'Arial-Bold-Italic', // Define the 'bolditalics' style for 'Arial' font
+              normal: 'Arial.ttf', // Specify the path to the 'Arial' normal font file
+              bold: 'Arial-Bold.ttf', // Specify the path to the 'Arial' bold font file
+              italics: 'Arial-Italic.ttf', // Specify the path to the 'Arial' italic font file
+              bolditalics: 'Arial-Bold-Italic.ttf', // Specify the path to the 'Arial' bold italic font file
             },
           },
           styles: styles,
         };
         console.log("Generating pdf");
-
+        
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
         // Create the PDF
         const pdfDoc = pdfMake.createPdf(documentDefinition);
