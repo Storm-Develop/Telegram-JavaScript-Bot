@@ -47,7 +47,7 @@ module.exports = {
           await ctx.reply("If you have completed your input, please type 'done' to continue.");
         }
       }
-      console.info("Job Description" + jobDescriptions);
+      console.info("Job Description " + jobDescriptions);
 
       await ctx.reply('Please enter your resume.');
 
@@ -68,7 +68,7 @@ module.exports = {
         }
       }
 
-      console.info("Resume Description" + resumeDescriptions);
+      console.info("Resume Description " + resumeDescriptions);
 
       await ctx.reply('Generating the cover letter. Please wait');
 
@@ -126,10 +126,15 @@ async function createCoverLetterPDF(coverLetterText, filename) {
           color: rgb(0, 0, 0), // Text color
         });
       
-        const pdfBytes = await pdfDoc.save();
-        fs.writeFileSync(filename, pdfBytes);
-      
-        await ctx.replyWithDocument({ source: filename });
+        try {
+          const pdfBytes = await pdfDoc.save();
+          fs.writeFileSync(filename, pdfBytes);
+          console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
+          await ctx.replyWithDocument({ source: filename });
+        } catch (error) {
+          console.error("Error while generating and sending the PDF:", error);
+          // Handle the error and possibly send an error message to the user
+        }
       }
 
     } catch (error) {
