@@ -2,7 +2,7 @@ const { OpenAI } = require("openai");
 const fs = require('fs');
 const {InputFile } = require('grammy');
 const pdfMake = require('pdfmake/build/pdfmake')
-var PDF_Fonts=require('pdfmake/build/vfs_fonts')
+const pdfFonts=require('pdfmake/build/vfs_fonts')
 
 
 module.exports = {
@@ -123,6 +123,8 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
           styles: styles,
         };
         console.log("Generating pdf");
+
+        pdfMake.vfs = pdfFonts.pdfMake.vfs;
         // Create the PDF
         const pdfDoc = pdfMake.createPdf(documentDefinition);
 
