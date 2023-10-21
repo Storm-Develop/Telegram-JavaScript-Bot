@@ -1,5 +1,4 @@
 const { OpenAI } = require("openai");
-const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
 const fs = require('fs');
 const {InputFile } = require('grammy');
 const pdfMake = require('pdfmake');
