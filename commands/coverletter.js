@@ -98,8 +98,8 @@ module.exports = {
 async function createCoverLetterPDF(coverLetterText, filename) {
         coverLetterText = coverLetterText.replace(/\n/g, ' ');
        
-        Console.info("coverLetterText" + coverLetterText);
-        Console.info("Setting the Times Roman font");
+        console.info("coverLetterText" + coverLetterText);
+        console.info("Setting the Times Roman font");
 
         const pdfDoc = await PDFDocument.create();
         const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
@@ -110,13 +110,13 @@ async function createCoverLetterPDF(coverLetterText, filename) {
         const { width, height } = page.getSize();
         const fontSize = 14;
 
-        Console.info("Getting text width of the Time Roman font");
+        console.info("Getting text width of the Time Roman font");
 
         const textWidth = timesRomanFont.widthOfTextAtSize(coverLetterText, fontSize);
         const x = (width - textWidth) / 2;
         const y = height - 50;
         
-        Console.info("Drawing Cover Letter Text");
+        console.info("Drawing Cover Letter Text");
 
         page.drawText(coverLetterText, {
           x,
