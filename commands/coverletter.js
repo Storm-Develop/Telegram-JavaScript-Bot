@@ -29,7 +29,7 @@ module.exports = {
 
       // const jobPostingDescription = userResponse.message.text;
             
-      await ctx.reply('Welcome! Please enter the job posting description, type *done* to continue.');
+      await ctx.reply('Welcome! Please enter the job posting description.');
 
       const jobDescriptions = [];
 
@@ -49,7 +49,7 @@ module.exports = {
       }
       console.info("Job Description" + jobDescriptions);
 
-      await ctx.reply('Please enter your resume. When you have finished, type *done* to continue.');
+      await ctx.reply('Please enter your resume.');
 
       const resumeDescriptions = [];
 
@@ -70,7 +70,7 @@ module.exports = {
 
       console.info("Resume Description" + resumeDescriptions);
 
-      await ctx.reply('Generating cover letter, please wait.');
+      await ctx.reply('Generating the cover letter. Please wait');
 
       // Define the parameters for generating a completion
       const response = await openai.chat.completions.create({
@@ -88,6 +88,8 @@ module.exports = {
       // Get the generated cover letter from the API response
       const coverLetter = response.choices[0].message.content;
 
+      await ctx.reply('Creating a PDF for your cover letter. Please wait.');
+
       createCoverLetterPDF(coverLetter, "CoverLetter_Test");
 
       // Reply with the generated cover letter
@@ -96,7 +98,7 @@ module.exports = {
 async function createCoverLetterPDF(coverLetterText, filename) {
         const pdfDoc = await PDFDocument.create();
         const page = pdfDoc.addPage([600, 400]);
-        const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        const helveticaFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
       
         const { width, height } = page.getSize();
         const fontSize = 14;
@@ -108,7 +110,7 @@ async function createCoverLetterPDF(coverLetterText, filename) {
           x,
           y,
           size: fontSize,
-          font: helveticaFont,
+          font: timesRomanFont,
           color: rgb(0, 0, 0), // Text color
         });
       
