@@ -3,7 +3,7 @@ const fs = require('fs');
 const {InputFile } = require('grammy');
 const pdfMake = require('pdfmake/build/pdfmake')
 //const pdfFonts=require('pdfmake/build/vfs_fonts')
-const pdfFonts = require('./vfs_fonts');
+const pdfFonts = require('pdfmake/build/vfs_fonts');
 
 
 
