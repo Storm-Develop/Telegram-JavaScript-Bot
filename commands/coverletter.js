@@ -87,7 +87,7 @@ module.exports = {
 
       // Get the generated cover letter from the API response
       const coverLetter = response.choices[0].message.content;
-
+      
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
 
@@ -96,18 +96,23 @@ module.exports = {
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
 async function createCoverLetterPDF(coverLetterText, filename) {
+        coverLetterText = coverLetterText.replace(/\n/g, ' ');
+       
+        Console.info("coverLetterText" + coverLetterText);
+        Console.info("Setting the Times Roman font");
+
         const pdfDoc = await PDFDocument.create();
-        const timeRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+        const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
         const page = pdfDoc.addPage([600, 400]);
-        Console.info("Setting Time Roman font");
 
         page.setFont(timesRomanFont)
 
         const { width, height } = page.getSize();
         const fontSize = 14;
+
         Console.info("Getting text width of the Time Roman font");
 
-        const textWidth = timeRomanFont.widthOfTextAtSize(coverLetterText, fontSize);
+        const textWidth = timesRomanFont.widthOfTextAtSize(coverLetterText, fontSize);
         const x = (width - textWidth) / 2;
         const y = height - 50;
         
@@ -117,7 +122,7 @@ async function createCoverLetterPDF(coverLetterText, filename) {
           x,
           y,
           size: fontSize,
-          font: utf8Font,
+          font: timesRomanFont,
           color: rgb(0, 0, 0), // Text color
         });
       
