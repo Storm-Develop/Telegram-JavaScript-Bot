@@ -91,7 +91,7 @@ module.exports = {
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
 
-      createCoverLetterPDF(coverLetter, "CoverLetter_Test");
+      createCoverLetterPDF(coverLetter, "CoverLetter_Test.pdf");
 
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
@@ -129,10 +129,10 @@ async function createCoverLetterPDF(coverLetterText, filename) {
         try {
           const pdfBytes = await pdfDoc.save();
           fs.writeFileSync(filename, pdfBytes);
-          let filenamePDF = filename + ".pdf";
-          console.info(`PDF Cover letter generation completed. File saved as ${filenamePDF}`);
 
-          await ctx.replyWithDocument({ source: { source: filenamePDF } });
+          console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
+
+          await ctx.replyWithDocument({ source: filename });
         } catch (error) {
           console.error("Error while generating and sending the PDF:", error);
           // Handle the error and possibly send an error message to the user
