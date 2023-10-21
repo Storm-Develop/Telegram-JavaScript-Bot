@@ -82,11 +82,14 @@ module.exports = {
         model: 'gpt-3.5-turbo',
         messages: [
           { role: 'system', content: 'You are a helpful assistant that writes cover letters.' },
-          { role: 'user', content: `Job description: ${jobDescriptions}` },
-          { role: 'user', content: `Resume: ${resumeDescriptions}` },
-          { role: 'assistant', content: `Write a cover letter based on the job description and resume.` },
+          { role: 'user', content: 'Generate a cover letter based on the following job description and resume:' },
+          { role: 'user', content: 'Job Description:' },
+          { role: 'user', content: jobDescriptions.join('\n') },
+          { role: 'user', content: 'Resume:' },
+          { role: 'user', content: resumeDescriptions.join('\n') },
+          { role: 'assistant', content: 'Write a cover letter based on the provided information.' },
         ],
-       // max_tokens:500
+        // max_tokens: 500
       });
       console.log(response.choices);
 
