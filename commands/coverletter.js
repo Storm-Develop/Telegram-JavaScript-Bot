@@ -33,26 +33,25 @@ module.exports = {
 
       // if (ctx.session.userResume === '')
       // {
-      await ctx.reply('Please enter your resume.');
+      await ctx.reply('Please enter your resume. When you have finished, please type **done** to exit.');
 
-      const resumeResponse  = await conversation.wait();
-      if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
+      const resumeDescriptions = [];
+
+      while (true) {
+        const resumeResponse = await conversation.wait();
+      
+        if (!resumeResponse || !resumeResponse.message || !resumeResponse.message.text) {
           await ctx.reply('Invalid resume description. Please try again.');
-          return;
+        } else {
+          const text = resumeResponse.message.text;
+          if (text.toLowerCase() === 'done') {
+            break; // Exit the loop when the user types 'done'
+          }
+          resumeDescriptions.push(text);
         }
+      }
 
-      //  ctx.session.userResume = resumeResponse.message.text;
-       // console.warn(`CTX Session is updated the value to ${ctx.session.userResume}`);
-
-        resumeDescription = resumeResponse.message.text;
-      // }
-
-      // else
-      // {
-      //   resumeDescription = ctx.session.userResume;
-      // }
-
-      console.info("RESUME Description" + resumeDescription);
+      console.info("RESUME Description" + resumeDescriptions);
       await ctx.reply('Generating cover letter, please wait.');
 
       // Define the parameters for generating a completion
@@ -61,7 +60,7 @@ module.exports = {
         messages: [
           { role: 'system', content: 'You are a helpful assistant that writes cover letters.' },
           { role: 'user', content: `Job description: ${jobPostingDescription}` },
-          { role: 'user', content: `Resume: ${resumeDescription}` },
+          { role: 'user', content: `Resume: ${resumeDescriptions}` },
           { role: 'assistant', content: `Write a cover letter based on the job description and resume.` },
         ],
         max_tokens:500
