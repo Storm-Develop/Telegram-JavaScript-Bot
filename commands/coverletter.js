@@ -99,23 +99,30 @@ module.exports = {
 async function createCoverLetterPDF(coverLetterText, filename) {
         const pdfDoc = await PDFDocument.create();
         const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-
+        
         // Standard page size (A4 size: 595 x 842 points)
         const pageSize = [595, 842];
         let currentPage = pdfDoc.addPage(pageSize);
         let pageHeight = pageSize[1] - 50;
         const fontSize = 14;
-
+        
         const lines = coverLetterText.split('\n');
-
-        for (const line of lines) {
+        
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i];
           const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
+        
+          if (i === 0) {
+            // Add some space at the top for the first line
+            pageHeight -= fontSize;
+          }
+        
           if (pageHeight - fontSize < 0 || textWidth > pageSize[0] - 100) {
             // Create a new page if the remaining height is not enough or if the text exceeds the width
             currentPage = pdfDoc.addPage(pageSize);
             pageHeight = pageSize[1] - 50;
           }
-
+        
           pageHeight -= fontSize;
           currentPage.drawText(line, {
             x: 50,
@@ -125,6 +132,7 @@ async function createCoverLetterPDF(coverLetterText, filename) {
             color: rgb(0, 0, 0),
           });
         }
+  
       
         try {
           const pdfBytes = await pdfDoc.save();
