@@ -17,7 +17,8 @@
     "dotenv": "^16.3.1",
     "grammy": "^1.17.2",
     "openai": "^4.12.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pdf-lib": "^1.17.1"
   },
   "packageManager": "yarn@3.6.1",
   "devDependencies": {
