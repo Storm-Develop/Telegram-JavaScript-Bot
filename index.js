@@ -4,7 +4,6 @@ const { freeStorage } = require("@grammyjs/storage-free");
 const coverletterCommand = require('./commands/coverletter');
 const botToken = process.env.BOT_TOKEN;
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
-const {InputFile } = require('grammy');
 
 const fs = require("fs");
 const path = require("path");

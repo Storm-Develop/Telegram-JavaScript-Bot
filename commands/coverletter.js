@@ -82,7 +82,7 @@ module.exports = {
           { role: 'user', content: `Resume: ${resumeDescriptions}` },
           { role: 'assistant', content: `Write a cover letter based on the job description and resume.` },
         ],
-        max_tokens:100
+        max_tokens:500
       });
       console.log(response.choices);
 
@@ -97,57 +97,49 @@ module.exports = {
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
 async function createCoverLetterPDF(coverLetterText, filename) {
-      const pdfDoc = await PDFDocument.create();
-      const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-      
-      // Standard page size (A4 size: 595 x 842 points)
-      const pageSize = [595, 842];
-      let currentPage = pdfDoc.addPage(pageSize);
-      let pageHeight = pageSize[1] - 50;
-      const fontSize = 14;
-      
-      const lines = coverLetterText.split('\n');
-      
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
-      
-        if (i === 0) {
-          // Add some space at the top for the first line
-          pageHeight -= fontSize;
-        }
-      
-        if (pageHeight - fontSize < 0) {
-          // Create a new page if the remaining height is not enough
-          currentPage = pdfDoc.addPage(pageSize);
-          pageHeight = pageSize[1] - 50;
-        }
-      
-        if (textWidth > pageSize[0] - 100) {
-          // Reduce the font size if the text exceeds the width
-          const newFontSize = (pageSize[0] - 100) / textWidth * fontSize;
-          currentPage.drawText(line, {
-            x: 50,
-            y: pageHeight,
-            size: newFontSize,
-            font: timesRomanFont,
-            color: rgb(0, 0, 0),
-          });
-        } else {
-          // Use the original font size
-          currentPage.drawText(line, {
-            x: 50,
-            y: pageHeight,
-            size: fontSize,
-            font: timesRomanFont,
-            color: rgb(0, 0, 0),
-          });
-        }
-      
-        pageHeight -= fontSize;
-      }
+  const pdfDoc = await PDFDocument.create();
+  const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
   
-      
+  // Standard page size (A4 size: 595 x 842 points)
+  const pageSize = [595, 842];
+  let currentPage = pdfDoc.addPage(pageSize);
+  let pageHeight = pageSize[1] - 50;
+  const fontSize = 14;
+  
+  const lines = coverLetterText.split('\n');
+  const maxLinesPerPage = Math.floor(pageHeight / fontSize);
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+  
+    if (i === 0) {
+      // Add some space at the top for the first line
+      pageHeight -= fontSize;
+    }
+  
+    if (pageHeight - fontSize < 0) {
+      // Create a new page if the remaining height is not enough
+      currentPage = pdfDoc.addPage(pageSize);
+      pageHeight = pageSize[1] - 50;
+    }
+  
+    // Calculate the maximum number of lines that can fit on the page
+    const remainingLines = maxLinesPerPage - i;
+    const linesToWrite = remainingLines >= 0 ? Math.min(remainingLines, lines.length - i) : 0;
+    const textToWrite = lines.slice(i, i + linesToWrite).join('\n');
+  
+    currentPage.drawText(textToWrite, {
+      x: 50,
+      y: pageHeight,
+      size: fontSize,
+      font: timesRomanFont,
+      color: rgb(0, 0, 0),
+    });
+  
+    pageHeight -= linesToWrite * fontSize;
+    i += linesToWrite - 1;
+  }
+
         try {
           const pdfBytes = await pdfDoc.save();
           fs.writeFileSync(filename, pdfBytes);
