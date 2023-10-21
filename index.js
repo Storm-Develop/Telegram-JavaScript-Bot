@@ -3,6 +3,7 @@ const { autoQuote } = require("@roziscoding/grammy-autoquote");
 const { freeStorage } = require("@grammyjs/storage-free");
 const coverletterCommand = require('./commands/coverletter');
 const botToken = process.env.BOT_TOKEN;
+const pdfMake = require('pdfmake');
 
 const fs = require("fs");
 const path = require("path");

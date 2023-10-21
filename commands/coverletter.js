@@ -96,23 +96,21 @@ module.exports = {
 
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
-      async function createCoverLetterPDFv2(coverLetterText, filename, ctx) {
-        console.info("Generating PDF from cover letter text...");
-      
+async function createCoverLetterPDFv2(coverLetterText, filename) {
         const paragraphs = coverLetterText.split('\n\n');
-      
-        // Define styles
+
+          // Define styles
         const styles = {
           header: { fontSize: 20, alignment: 'center', margin: [0, 0, 0, 20] },
           paragraph: { fontSize: 12, margin: [0, 0, 0, 10] },
         };
-      
         // Build the content array
         const content = [];
+        //content.push({ text: 'Cover Letter', style: 'header' });
         paragraphs.forEach((paragraph) => {
           content.push({ text: paragraph, style: 'paragraph' });
         });
-      
+
         // Create the document definition
         const documentDefinition = {
           content: content,
@@ -121,27 +119,29 @@ module.exports = {
           },
           styles: styles,
         };
-      
-        console.info("Creating PDF document...");
-      
+        Console.log("Generating pdf");
         // Create the PDF
         const pdfDoc = pdfMake.createPdf(documentDefinition);
-      
+
         try {
-          // Get a buffer of the PDF
-          pdfDoc.getBuffer((buffer) => {
-            fs.writeFileSync(filename, buffer);
-            console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
-      
-            // Send the generated PDF
-            console.info("Sending the PDF to the user...");
-            ctx.replyWithDocument(new InputFile(filename));
-          });
+                // Save the PDF to a file
+        pdfDoc.getBuffer((buffer) => {
+          fs.writeFileSync(filename, buffer);
+          console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
+        });
+
+          await ctx.replyWithDocument(new InputFile(filename));
         } catch (error) {
           console.error("Error while generating and sending the PDF:", error);
           // Handle the error and possibly send an error message to the user
         }
       }
+
+    } catch (error) {
+      console.info(error.stack); // Log the error, including the stack trace
+      await ctx.reply("Sorry, there was an error generating the cover letter: " + error.message);
+    }
+
 
 // async function createCoverLetterPDF(coverLetterText, filename) {
 //   const pdfDoc = await PDFDocument.create();
