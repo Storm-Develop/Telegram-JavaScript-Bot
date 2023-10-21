@@ -98,7 +98,7 @@ module.exports = {
 async function createCoverLetterPDF(coverLetterText, filename) {
         coverLetterText = coverLetterText.replace(/\n/g, ' ');
        
-        console.info("coverLetterText" + coverLetterText);
+        console.info("coverLetterText " + coverLetterText);
         console.info("Setting the Times Roman font");
 
         const pdfDoc = await PDFDocument.create();
@@ -130,7 +130,8 @@ async function createCoverLetterPDF(coverLetterText, filename) {
           const pdfBytes = await pdfDoc.save();
           fs.writeFileSync(filename, pdfBytes);
           console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
-          await ctx.replyWithDocument({ source: filename });
+          let filenamePDF = filename +".pdf";
+          await ctx.replyWithDocument({ source: filenamePDF });
         } catch (error) {
           console.error("Error while generating and sending the PDF:", error);
           // Handle the error and possibly send an error message to the user
