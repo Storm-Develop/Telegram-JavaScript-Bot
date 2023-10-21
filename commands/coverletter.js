@@ -96,7 +96,7 @@ module.exports = {
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
 
-      createCoverLetterPDF(coverLetter, "CoverLetter_Test.pdf");
+      createCoverLetterPDF(coverLetter, "CoverLetter.pdf");
 
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
