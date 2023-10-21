@@ -97,38 +97,25 @@ module.exports = {
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
 async function createCoverLetterPDF(coverLetterText, filename) {
-          // const coverLetterText = `
-          // <!DOCTYPE html>
-          // <html>
-          // <head>
-          //   <title>Cover Letter</title>
-          // </head>
-          // <body>
-          //   <div>
-          //     <h1>Cover Letter</h1>
-          //     <p>${coverLetterText}</p>
-          //   </div>
-          // </body>
-          // </html>
-          // `;
-        //coverLetterText = coverLetterText.replace(/\n/g, ' ');
-       
-        c  // Initial page size
-        const initialPageSize= [595, 842];
-        let currentPage = pdfDoc.addPage(initialPageSize);
-        let pageHeight = initialPageSize[1] - 50;
+        const pdfDoc = await PDFDocument.create();
+        const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+
+        // Standard page size (A4 size: 595 x 842 points)
+        const pageSize = [595, 842];
+        let currentPage = pdfDoc.addPage(pageSize);
+        let pageHeight = pageSize[1] - 50;
         const fontSize = 14;
-      
+
         const lines = coverLetterText.split('\n');
-      
+
         for (const line of lines) {
           const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
-          if (pageHeight - fontSize < 0 || textWidth > initialPageSize[0] - 100) {
+          if (pageHeight - fontSize < 0 || textWidth > pageSize[0] - 100) {
             // Create a new page if the remaining height is not enough or if the text exceeds the width
-            currentPage = pdfDoc.addPage(initialPageSize);
-            pageHeight = initialPageSize[1] - 50;
+            currentPage = pdfDoc.addPage(pageSize);
+            pageHeight = pageSize[1] - 50;
           }
-      
+
           pageHeight -= fontSize;
           currentPage.drawText(line, {
             x: 50,
