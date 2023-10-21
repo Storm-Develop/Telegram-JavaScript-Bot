@@ -118,7 +118,15 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
         const documentDefinition = {
           content: content,
           defaultStyle: {
-            font: 'Helvetica',
+            font: 'Arial', // Set the default font to 'Arial'
+          },
+          fonts: {
+            Arial: {
+              normal: 'Arial', // Define the 'normal' style for 'Arial' font
+              bold: 'Arial-Bold', // Define the 'bold' style for 'Arial' font
+              italics: 'Arial-Italic', // Define the 'italics' style for 'Arial' font
+              bolditalics: 'Arial-Bold-Italic', // Define the 'bolditalics' style for 'Arial' font
+            },
           },
           styles: styles,
         };
