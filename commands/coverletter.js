@@ -104,10 +104,14 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
         const paragraphs = coverLetterText.split('\n\n');
 
           // Define styles
-        const styles = {
-          header: { fontSize: 20, alignment: 'center', margin: [0, 0, 0, 20] },
-          paragraph: { fontSize: 12, margin: [0, 0, 0, 10] },
-        };
+          const styles = {
+            header: { fontSize: 20, alignment: 'center', margin: [0, 0, 0, 20] },
+            paragraph: {
+              fontSize: 12,
+              margin: [0, 0, 0, 10],
+              lineHeight: 1.25, // Adjust the value for the desired space between lines
+            },
+          };
         // Build the content array
         const content = [];
         //content.push({ text: 'Cover Letter', style: 'header' });
@@ -145,10 +149,8 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
 
         // Create the document definition
         const documentDefinition = {
-          content: content
-            // defaultStyle: {
-            //   font: 'Times-Roman'
-            // }
+          content: content,
+          styles: styles,
         };
         console.log("Generating pdf");
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
