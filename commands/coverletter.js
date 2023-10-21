@@ -88,12 +88,12 @@ module.exports = {
       // Get the generated cover letter from the API response
       const coverLetter = response.choices[0].message.content;
 
-      await ctx.reply('Creating a PDF for your cover letter. Please wait.');
+      // Reply with the generated cover letter
+      await ctx.reply(coverLetter);
 
       createCoverLetterPDF(coverLetter, "CoverLetter_Test");
 
-      // Reply with the generated cover letter
-      await ctx.reply(coverLetter);
+      await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
 async function createCoverLetterPDF(coverLetterText, filename) {
         const pdfDoc = await PDFDocument.create();
