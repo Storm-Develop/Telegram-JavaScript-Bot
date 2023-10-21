@@ -115,10 +115,10 @@ async function createCoverLetterPDF(coverLetterText, filename) {
       pageHeight = pageSize[1] - 50;
     }
   
-    while (timesRomanFont.widthOfTextAtSize(line, fontSize) > pageSize[0] - 100) {
+    while (timesRomanFont.widthOfTextAtSize(line, fontSize) > pageSize[0] - 120) {
       // If the text is too wide, split it into two lines
       const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
-      const charsToFit = Math.floor((pageSize[0] - 100) / textWidth * line.length);
+      const charsToFit = Math.floor((pageSize[0] - 120) / textWidth * line.length);
       const line1 = line.substring(0, charsToFit);
       const line2 = line.substring(charsToFit);
       line = line1;
