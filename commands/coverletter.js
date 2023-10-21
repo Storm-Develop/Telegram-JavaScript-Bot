@@ -1,7 +1,9 @@
 const { OpenAI } = require("openai");
 const fs = require('fs');
 const {InputFile } = require('grammy');
-const pdfMake = require('pdfmake');
+const pdfMake = require('pdfmake/build/pdfmake')
+var PDF_Fonts=require('pdfmake/build/vfs_fonts')
+
 
 module.exports = {
   name: "coverletter",
