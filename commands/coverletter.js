@@ -112,27 +112,46 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
         paragraphs.forEach((paragraph) => {
           content.push({ text: paragraph, style: 'paragraph' });
         });
+
+        pdfMake.fonts = {
+          Courier: {
+            normal: 'Courier',
+            bold: 'Courier-Bold',
+            italics: 'Courier-Oblique',
+            bolditalics: 'Courier-BoldOblique'
+          },
+          Helvetica: {
+            normal: 'Helvetica',
+            bold: 'Helvetica-Bold',
+            italics: 'Helvetica-Oblique',
+            bolditalics: 'Helvetica-BoldOblique'
+          },
+          Times: {
+            normal: 'Times-Roman',
+            bold: 'Times-Bold',
+            italics: 'Times-Italic',
+            bolditalics: 'Times-BoldItalic'
+          },
+          Symbol: {
+            normal: 'Symbol'
+          },
+          ZapfDingbats: {
+            normal: 'ZapfDingbats'
+          }
+        };
         
 
         // Create the document definition
         const documentDefinition = {
           content: content,
-          defaultStyle: {
-            font: 'Arial', // Set the default font to 'Arial'
-          },
-          fonts: {
-            Arial: {
-              normal: 'Arial.ttf', // Specify the path to the 'Arial' normal font file
-              bold: 'Arial-Bold.ttf', // Specify the path to the 'Arial' bold font file
-              italics: 'Arial-Italic.ttf', // Specify the path to the 'Arial' italic font file
-              bolditalics: 'Arial-Bold-Italic.ttf', // Specify the path to the 'Arial' bold italic font file
-            },
-          },
-          styles: styles,
+            defaultStyle: {
+              font: 'Times-Roman'
+            }
         };
         console.log("Generating pdf");
         
-        pdfMake.vfs = pdfFonts.pdfMake.vfs;
+        //pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
         // Create the PDF
         const pdfDoc = pdfMake.createPdf(documentDefinition);
 
