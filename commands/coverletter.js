@@ -144,71 +144,71 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
     }
 
 
-async function createCoverLetterPDF(coverLetterText, filename) {
-  const pdfDoc = await PDFDocument.create();
-  const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+// async function createCoverLetterPDF(coverLetterText, filename) {
+//   const pdfDoc = await PDFDocument.create();
+//   const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
   
-  // Standard page size (A4 size: 595 x 842 points)
-  const pageSize = [595, 842];
-  let currentPage = pdfDoc.addPage(pageSize);
-  let pageHeight = pageSize[1] - 50;
-  const fontSize = 11;
+//   // Standard page size (A4 size: 595 x 842 points)
+//   const pageSize = [595, 842];
+//   let currentPage = pdfDoc.addPage(pageSize);
+//   let pageHeight = pageSize[1] - 50;
+//   const fontSize = 11;
   
-  const lines = coverLetterText.split('\n');
+//   const lines = coverLetterText.split('\n');
   
-  for (let line of lines) {
-    if (pageHeight - fontSize < 0) {
-      // Create a new page if the remaining height is not enough
-      currentPage = pdfDoc.addPage(pageSize);
-      pageHeight = pageSize[1] - 50;
-    }
+//   for (let line of lines) {
+//     if (pageHeight - fontSize < 0) {
+//       // Create a new page if the remaining height is not enough
+//       currentPage = pdfDoc.addPage(pageSize);
+//       pageHeight = pageSize[1] - 50;
+//     }
   
-    while (timesRomanFont.widthOfTextAtSize(line, fontSize) > pageSize[0] - 120) {
-      // If the text is too wide, split it into two lines
-      const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
-      const charsToFit = Math.floor((pageSize[0] - 120) / textWidth * line.length);
-      const line1 = line.substring(0, charsToFit);
-      const line2 = line.substring(charsToFit);
-      line = line1;
-      currentPage.drawText(line, {
-        x: 50,
-        y: pageHeight,
-        size: fontSize,
-        font: timesRomanFont,
-        color: rgb(0, 0, 0),
-      });
-      pageHeight -= fontSize;
-      line = line2;
-    }
+//     while (timesRomanFont.widthOfTextAtSize(line, fontSize) > pageSize[0] - 120) {
+//       // If the text is too wide, split it into two lines
+//       const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
+//       const charsToFit = Math.floor((pageSize[0] - 120) / textWidth * line.length);
+//       const line1 = line.substring(0, charsToFit);
+//       const line2 = line.substring(charsToFit);
+//       line = line1;
+//       currentPage.drawText(line, {
+//         x: 50,
+//         y: pageHeight,
+//         size: fontSize,
+//         font: timesRomanFont,
+//         color: rgb(0, 0, 0),
+//       });
+//       pageHeight -= fontSize;
+//       line = line2;
+//     }
   
-    currentPage.drawText(line, {
-      x: 50,
-      y: pageHeight,
-      size: fontSize,
-      font: timesRomanFont,
-      color: rgb(0, 0, 0),
-    });
+//     currentPage.drawText(line, {
+//       x: 50,
+//       y: pageHeight,
+//       size: fontSize,
+//       font: timesRomanFont,
+//       color: rgb(0, 0, 0),
+//     });
   
-    pageHeight -= fontSize;
-  }
+//     pageHeight -= fontSize;
+//   }
 
-        try {
-          const pdfBytes = await pdfDoc.save();
-          fs.writeFileSync(filename, pdfBytes);
+//         try {
+//           const pdfBytes = await pdfDoc.save();
+//           fs.writeFileSync(filename, pdfBytes);
 
-          console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
+//           console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
 
-          await ctx.replyWithDocument(new InputFile(filename));
-        } catch (error) {
-          console.error("Error while generating and sending the PDF:", error);
-          // Handle the error and possibly send an error message to the user
-        }
-      }
+//           await ctx.replyWithDocument(new InputFile(filename));
+//         } catch (error) {
+//           console.error("Error while generating and sending the PDF:", error);
+//           // Handle the error and possibly send an error message to the user
+//         }
+//       }
 
-    } catch (error) {
-      console.info(error.stack); // Log the error, including the stack trace
-      await ctx.reply("Sorry, there was an error generating the cover letter: " + error.message);
-    }
+//     } catch (error) {
+//       console.info(error.stack); // Log the error, including the stack trace
+//       await ctx.reply("Sorry, there was an error generating the cover letter: " + error.message);
+//     }
 
   }
 };
