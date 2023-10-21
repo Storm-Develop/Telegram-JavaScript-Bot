@@ -97,33 +97,44 @@ module.exports = {
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
 async function createCoverLetterPDF(coverLetterText, filename) {
-        const pdfDoc = await PDFDocument.create();
-        const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-        
-        // Standard page size (A4 size: 595 x 842 points)
-        const pageSize = [595, 842];
-        let currentPage = pdfDoc.addPage(pageSize);
-        let pageHeight = pageSize[1] - 50;
-        const fontSize = 14;
-        
-        const lines = coverLetterText.split('\n');
-        
-        for (let i = 0; i < lines.length; i++) {
-          const line = lines[i];
-          const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
-        
-          if (i === 0) {
-            // Add some space at the top for the first line
-            pageHeight -= fontSize;
-          }
-        
-          if (pageHeight - fontSize < 0 || textWidth > pageSize[0] - 100) {
-            // Create a new page if the remaining height is not enough or if the text exceeds the width
-            currentPage = pdfDoc.addPage(pageSize);
-            pageHeight = pageSize[1] - 50;
-          }
-        
+      const pdfDoc = await PDFDocument.create();
+      const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+      
+      // Standard page size (A4 size: 595 x 842 points)
+      const pageSize = [595, 842];
+      let currentPage = pdfDoc.addPage(pageSize);
+      let pageHeight = pageSize[1] - 50;
+      const fontSize = 14;
+      
+      const lines = coverLetterText.split('\n');
+      
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
+      
+        if (i === 0) {
+          // Add some space at the top for the first line
           pageHeight -= fontSize;
+        }
+      
+        if (pageHeight - fontSize < 0) {
+          // Create a new page if the remaining height is not enough
+          currentPage = pdfDoc.addPage(pageSize);
+          pageHeight = pageSize[1] - 50;
+        }
+      
+        if (textWidth > pageSize[0] - 100) {
+          // Reduce the font size if the text exceeds the width
+          const newFontSize = (pageSize[0] - 100) / textWidth * fontSize;
+          currentPage.drawText(line, {
+            x: 50,
+            y: pageHeight,
+            size: newFontSize,
+            font: timesRomanFont,
+            color: rgb(0, 0, 0),
+          });
+        } else {
+          // Use the original font size
           currentPage.drawText(line, {
             x: 50,
             y: pageHeight,
@@ -132,6 +143,9 @@ async function createCoverLetterPDF(coverLetterText, filename) {
             color: rgb(0, 0, 0),
           });
         }
+      
+        pageHeight -= fontSize;
+      }
   
       
         try {
