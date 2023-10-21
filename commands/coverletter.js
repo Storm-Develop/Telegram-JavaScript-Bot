@@ -13,27 +13,40 @@ module.exports = {
         apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
       });
 
-      await ctx.reply('Welcome! Please enter the job posting description.');
+      // await ctx.reply('Welcome! Please enter the job posting description.');
 
       // Start a conversation
 
       // Wait for the user to send the job posting description
-      const userResponse  = await conversation.wait();
-      if (!userResponse || !userResponse.message || !userResponse.message.text) {
-        await ctx.reply('Invalid job posting description. Please try again.');
-        return;
+      // const userResponse  = await conversation.wait();
+      // if (!userResponse || !userResponse.message || !userResponse.message.text) {
+      //   await ctx.reply('Invalid job posting description. Please try again.');
+      //   return;
+      // }
+      // console.info(userResponse.message);
+
+      // const jobPostingDescription = userResponse.message.text;
+            
+      await ctx.reply('Welcome! Please enter the job posting description,type **done** to continue.',{ parse_mode: "MarkdownV2" });
+
+      const jobDescriptions = [];
+
+      while (true) {
+        const jobDescriptionResponse = await conversation.wait();
+      
+        if (!jobDescriptionResponse || !jobDescriptionResponse.message || !jobDescriptionResponse.message.text) {
+          await ctx.reply('Invalid job description. Please try again.');
+        } else {
+          const text = jobDescriptionResponse.message.text;
+          if (text.toLowerCase() === 'done'|| text.toLowerCase() === 'Done') {
+            break; // Exit the loop when the user types 'done'
+          }
+          jobDescriptions.push(text);
+        }
       }
-      console.info(userResponse.message);
+      console.info("Job Description" + jobDescriptions);
 
-      const jobPostingDescription = userResponse.message.text;
-      
-      let resumeDescription = '';
-      
-      //console.warn(`Existing Resume ${ctx.session.userResume}`);
-
-      // if (ctx.session.userResume === '')
-      // {
-      await ctx.reply('Please enter your resume. When you have finished, please type **done** to exit.');
+      await ctx.reply('Please enter your resume. When you have finished,type **done** to continue.',{ parse_mode: "MarkdownV2" });
 
       const resumeDescriptions = [];
 
@@ -44,14 +57,15 @@ module.exports = {
           await ctx.reply('Invalid resume description. Please try again.');
         } else {
           const text = resumeResponse.message.text;
-          if (text.toLowerCase() === 'done') {
+          if (text.toLowerCase() === 'done'|| text.toLowerCase() === 'Done') {
             break; // Exit the loop when the user types 'done'
           }
           resumeDescriptions.push(text);
         }
       }
 
-      console.info("RESUME Description" + resumeDescriptions);
+      console.info("Resume Description" + resumeDescriptions);
+
       await ctx.reply('Generating cover letter, please wait.');
 
       // Define the parameters for generating a completion
@@ -59,7 +73,7 @@ module.exports = {
         model: 'gpt-3.5-turbo',
         messages: [
           { role: 'system', content: 'You are a helpful assistant that writes cover letters.' },
-          { role: 'user', content: `Job description: ${jobPostingDescription}` },
+          { role: 'user', content: `Job description: ${jobDescriptions}` },
           { role: 'user', content: `Resume: ${resumeDescriptions}` },
           { role: 'assistant', content: `Write a cover letter based on the job description and resume.` },
         ],
