@@ -115,32 +115,32 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
           content.push({ text: paragraph, style: 'paragraph' });
         });
 
-        pdfMake.fonts = {
-          Courier: {
-            normal: 'Courier',
-            bold: 'Courier-Bold',
-            italics: 'Courier-Oblique',
-            bolditalics: 'Courier-BoldOblique'
-          },
-          Helvetica: {
-            normal: 'Helvetica',
-            bold: 'Helvetica-Bold',
-            italics: 'Helvetica-Oblique',
-            bolditalics: 'Helvetica-BoldOblique'
-          },
-          Times: {
-            normal: 'Times-Roman',
-            bold: 'Times-Bold',
-            italics: 'Times-Italic',
-            bolditalics: 'Times-BoldItalic'
-          },
-          Symbol: {
-            normal: 'Symbol'
-          },
-          ZapfDingbats: {
-            normal: 'ZapfDingbats'
-          }
-        };
+        // pdfMake.fonts = {
+        //   Courier: {
+        //     normal: 'Courier',
+        //     bold: 'Courier-Bold',
+        //     italics: 'Courier-Oblique',
+        //     bolditalics: 'Courier-BoldOblique'
+        //   },
+        //   Helvetica: {
+        //     normal: 'Helvetica',
+        //     bold: 'Helvetica-Bold',
+        //     italics: 'Helvetica-Oblique',
+        //     bolditalics: 'Helvetica-BoldOblique'
+        //   },
+        //   Times: {
+        //     normal: 'Times-Roman',
+        //     bold: 'Times-Bold',
+        //     italics: 'Times-Italic',
+        //     bolditalics: 'Times-BoldItalic'
+        //   },
+        //   Symbol: {
+        //     normal: 'Symbol'
+        //   },
+        //   ZapfDingbats: {
+        //     normal: 'ZapfDingbats'
+        //   }
+        // };
         
 
         // Create the document definition
@@ -151,8 +151,7 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
             // }
         };
         console.log("Generating pdf");
-        pdfMake.addVirtualFileSystem(pdfFonts);
-        //pdfMake.vfs = pdfFonts.pdfMake.vfs;
+        pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
         // Create the PDF
         const pdfDoc = pdfMake.createPdf(documentDefinition);
