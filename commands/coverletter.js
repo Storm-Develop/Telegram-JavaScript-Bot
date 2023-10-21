@@ -27,7 +27,7 @@ module.exports = {
 
       // const jobPostingDescription = userResponse.message.text;
             
-      await ctx.reply('Welcome! Please enter the job posting description, type \\*\\*done\\*\\* to continue.', { parse_mode: "MarkdownV2" });
+      await ctx.reply('Welcome! Please enter the job posting description, type *done* to continue.');
 
       const jobDescriptions = [];
 
@@ -46,7 +46,7 @@ module.exports = {
       }
       console.info("Job Description" + jobDescriptions);
 
-      await ctx.reply('Please enter your resume. When you have finished, type \\*\\*done\\*\\* to continue.',{ parse_mode: "MarkdownV2" });
+      await ctx.reply('Please enter your resume. When you have finished, type *done* to continue.');
 
       const resumeDescriptions = [];
 
