@@ -104,7 +104,7 @@ async function createCoverLetterPDF(coverLetterText, filename) {
   const pageSize = [595, 842];
   let currentPage = pdfDoc.addPage(pageSize);
   let pageHeight = pageSize[1] - 50;
-  const fontSize = 14;
+  const fontSize = 11;
   
   const lines = coverLetterText.split('\n');
   
