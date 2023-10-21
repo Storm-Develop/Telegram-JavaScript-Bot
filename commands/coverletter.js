@@ -107,28 +107,33 @@ async function createCoverLetterPDF(coverLetterText, filename) {
   const fontSize = 14;
   
   const lines = coverLetterText.split('\n');
-  const maxLinesPerPage = Math.floor(pageHeight / fontSize);
   
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-  
-    if (i === 0) {
-      // Add some space at the top for the first line
-      pageHeight -= fontSize;
-    }
-  
+  for (let line of lines) {
     if (pageHeight - fontSize < 0) {
       // Create a new page if the remaining height is not enough
       currentPage = pdfDoc.addPage(pageSize);
       pageHeight = pageSize[1] - 50;
     }
   
-    // Calculate the maximum number of lines that can fit on the page
-    const remainingLines = maxLinesPerPage - i;
-    const linesToWrite = remainingLines >= 0 ? Math.min(remainingLines, lines.length - i) : 0;
-    const textToWrite = lines.slice(i, i + linesToWrite).join('\n');
+    while (timesRomanFont.widthOfTextAtSize(line, fontSize) > pageSize[0] - 100) {
+      // If the text is too wide, split it into two lines
+      const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
+      const charsToFit = Math.floor((pageSize[0] - 100) / textWidth * line.length);
+      const line1 = line.substring(0, charsToFit);
+      const line2 = line.substring(charsToFit);
+      line = line1;
+      currentPage.drawText(line, {
+        x: 50,
+        y: pageHeight,
+        size: fontSize,
+        font: timesRomanFont,
+        color: rgb(0, 0, 0),
+      });
+      pageHeight -= fontSize;
+      line = line2;
+    }
   
-    currentPage.drawText(textToWrite, {
+    currentPage.drawText(line, {
       x: 50,
       y: pageHeight,
       size: fontSize,
@@ -136,8 +141,7 @@ async function createCoverLetterPDF(coverLetterText, filename) {
       color: rgb(0, 0, 0),
     });
   
-    pageHeight -= linesToWrite * fontSize;
-    i += linesToWrite - 1;
+    pageHeight -= fontSize;
   }
 
         try {
