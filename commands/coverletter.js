@@ -110,6 +110,7 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
         paragraphs.forEach((paragraph) => {
           content.push({ text: paragraph, style: 'paragraph' });
         });
+        
 
         // Create the document definition
         const documentDefinition = {
