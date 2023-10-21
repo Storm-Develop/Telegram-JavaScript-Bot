@@ -143,10 +143,10 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
 
         // Create the document definition
         const documentDefinition = {
-          content: content,
-            defaultStyle: {
-              font: 'Times-Roman'
-            }
+          content: content
+            // defaultStyle: {
+            //   font: 'Times-Roman'
+            // }
         };
         console.log("Generating pdf");
         
