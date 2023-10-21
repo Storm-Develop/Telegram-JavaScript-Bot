@@ -97,35 +97,47 @@ module.exports = {
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
 async function createCoverLetterPDF(coverLetterText, filename) {
-        coverLetterText = coverLetterText.replace(/\n/g, ' ');
+          // const coverLetterText = `
+          // <!DOCTYPE html>
+          // <html>
+          // <head>
+          //   <title>Cover Letter</title>
+          // </head>
+          // <body>
+          //   <div>
+          //     <h1>Cover Letter</h1>
+          //     <p>${coverLetterText}</p>
+          //   </div>
+          // </body>
+          // </html>
+          // `;
+        //coverLetterText = coverLetterText.replace(/\n/g, ' ');
        
-        console.info("coverLetterText " + coverLetterText);
-        console.info("Setting the Times Roman font");
-
-        const pdfDoc = await PDFDocument.create();
-        const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-        const page = pdfDoc.addPage([600, 400]);
-
-        page.setFont(timesRomanFont)
-
-        const { width, height } = page.getSize();
+        c  // Initial page size
+        const initialPageSize= [595, 842];
+        let currentPage = pdfDoc.addPage(initialPageSize);
+        let pageHeight = initialPageSize[1] - 50;
         const fontSize = 14;
-
-        console.info("Getting text width of the Time Roman font");
-
-        const textWidth = timesRomanFont.widthOfTextAtSize(coverLetterText, fontSize);
-        const x = (width - textWidth) / 2;
-        const y = height - 50;
-        
-        console.info("Drawing Cover Letter Text");
-
-        page.drawText(coverLetterText, {
-          x,
-          y,
-          size: fontSize,
-          font: timesRomanFont,
-          color: rgb(0, 0, 0), // Text color
-        });
+      
+        const lines = coverLetterText.split('\n');
+      
+        for (const line of lines) {
+          const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
+          if (pageHeight - fontSize < 0 || textWidth > initialPageSize[0] - 100) {
+            // Create a new page if the remaining height is not enough or if the text exceeds the width
+            currentPage = pdfDoc.addPage(initialPageSize);
+            pageHeight = initialPageSize[1] - 50;
+          }
+      
+          pageHeight -= fontSize;
+          currentPage.drawText(line, {
+            x: 50,
+            y: pageHeight,
+            size: fontSize,
+            font: timesRomanFont,
+            color: rgb(0, 0, 0),
+          });
+        }
       
         try {
           const pdfBytes = await pdfDoc.save();
