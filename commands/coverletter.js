@@ -1,4 +1,6 @@
 const { OpenAI } = require("openai");
+const { PDFDocument, rgb } = require('pdf-lib');
+const fs = require('fs');
 
 module.exports = {
   name: "coverletter",
@@ -88,34 +90,36 @@ module.exports = {
 
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
+
+async function createCoverLetterPDF(coverLetterText, filename) {
+        const pdfDoc = await PDFDocument.create();
+        const page = pdfDoc.addPage([600, 400]);
+        const helveticaFont = await pdfDoc.embedFont(PDFDocument.Fonts.Helvetica);
+      
+        const { width, height } = page.getSize();
+        const fontSize = 14;
+        const textWidth = helveticaFont.widthOfTextAtSize(coverLetterText, fontSize);
+        const x = (width - textWidth) / 2;
+        const y = height - 50;
+      
+        page.drawText(coverLetterText, {
+          x,
+          y,
+          size: fontSize,
+          font: helveticaFont,
+          color: rgb(0, 0, 0), // Text color
+        });
+      
+        const pdfBytes = await pdfDoc.save();
+        fs.writeFileSync(filename, pdfBytes);
+      
+        await ctx.replyWithDocument({ source: filename });
+      }
+
     } catch (error) {
       console.info(error.stack); // Log the error, including the stack trace
       await ctx.reply("Sorry, there was an error generating the cover letter: " + error.message);
     }
 
-    async function createCoverLetterPDF(coverLetterText, filename) {
-      const pdfDoc = await PDFDocument.create();
-      const page = pdfDoc.addPage([600, 400]);
-      const helveticaFont = await pdfDoc.embedFont(PDFDocument.Fonts.Helvetica);
-    
-      const { width, height } = page.getSize();
-      const fontSize = 14;
-      const textWidth = helveticaFont.widthOfTextAtSize(coverLetterText, fontSize);
-      const x = (width - textWidth) / 2;
-      const y = height - 50;
-    
-      page.drawText(coverLetterText, {
-        x,
-        y,
-        size: fontSize,
-        font: helveticaFont,
-        color: rgb(0, 0, 0), // Text color
-      });
-    
-      const pdfBytes = await pdfDoc.save();
-      fs.writeFileSync(filename, pdfBytes);
-    
-      await ctx.replyWithDocument({ source: filename });
-    }
   }
 };
