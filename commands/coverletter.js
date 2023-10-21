@@ -1,5 +1,5 @@
 const { OpenAI } = require("openai");
-const { PDFDocument, rgb } = require('pdf-lib');
+const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
 const fs = require('fs');
 
 module.exports = {
@@ -44,6 +44,7 @@ module.exports = {
             break; // Exit the loop when the user types 'done'
           }
           jobDescriptions.push(text);
+          await ctx.reply("If you have completed your input, please type 'done' to continue.");
         }
       }
       console.info("Job Description" + jobDescriptions);
@@ -63,6 +64,7 @@ module.exports = {
             break; // Exit the loop when the user types 'done'
           }
           resumeDescriptions.push(text);
+          await ctx.reply("If you have completed your input, please type 'done' to continue.");
         }
       }
 
@@ -94,7 +96,7 @@ module.exports = {
 async function createCoverLetterPDF(coverLetterText, filename) {
         const pdfDoc = await PDFDocument.create();
         const page = pdfDoc.addPage([600, 400]);
-        const helveticaFont = await pdfDoc.embedFont(PDFDocument.Fonts.Helvetica);
+        const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
       
         const { width, height } = page.getSize();
         const fontSize = 14;
