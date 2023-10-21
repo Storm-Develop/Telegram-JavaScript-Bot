@@ -86,7 +86,7 @@ module.exports = {
           { role: 'user', content: `Resume: ${resumeDescriptions}` },
           { role: 'assistant', content: `Write a cover letter based on the job description and resume.` },
         ],
-        max_tokens:500
+       // max_tokens:500
       });
       console.log(response.choices);
 
@@ -96,11 +96,11 @@ module.exports = {
       // Reply with the generated cover letter
       await ctx.reply(coverLetter);
 
-      createCoverLetterPDFv2(coverLetter, "CoverLetter_Test.pdf");
+      createCoverLetterPDF(coverLetter, "CoverLetter_Test.pdf");
 
       await ctx.reply('Creating a PDF for your cover letter. Please wait.');
 
-async function createCoverLetterPDFv2(coverLetterText, filename) {
+async function createCoverLetterPDF(coverLetterText, filename) {
         const paragraphs = coverLetterText.split('\n');
 
           // Define styles
@@ -114,39 +114,10 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
           };
         // Build the content array
         const content = [];
-        //content.push({ text: 'Cover Letter', style: 'header' });
         paragraphs.forEach((paragraph) => {
           content.push({ text: paragraph, style: 'paragraph' });
         });
-
-        // pdfMake.fonts = {
-        //   Courier: {
-        //     normal: 'Courier',
-        //     bold: 'Courier-Bold',
-        //     italics: 'Courier-Oblique',
-        //     bolditalics: 'Courier-BoldOblique'
-        //   },
-        //   Helvetica: {
-        //     normal: 'Helvetica',
-        //     bold: 'Helvetica-Bold',
-        //     italics: 'Helvetica-Oblique',
-        //     bolditalics: 'Helvetica-BoldOblique'
-        //   },
-        //   Times: {
-        //     normal: 'Times-Roman',
-        //     bold: 'Times-Bold',
-        //     italics: 'Times-Italic',
-        //     bolditalics: 'Times-BoldItalic'
-        //   },
-        //   Symbol: {
-        //     normal: 'Symbol'
-        //   },
-        //   ZapfDingbats: {
-        //     normal: 'ZapfDingbats'
-        //   }
-        // };
-        
-
+      
         // Create the document definition
         const documentDefinition = {
           content: content,
@@ -176,73 +147,6 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
       console.info(error.stack); // Log the error, including the stack trace
       await ctx.reply("Sorry, there was an error generating the cover letter: " + error.message);
     }
-
-
-// async function createCoverLetterPDF(coverLetterText, filename) {
-//   const pdfDoc = await PDFDocument.create();
-//   const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-  
-//   // Standard page size (A4 size: 595 x 842 points)
-//   const pageSize = [595, 842];
-//   let currentPage = pdfDoc.addPage(pageSize);
-//   let pageHeight = pageSize[1] - 50;
-//   const fontSize = 11;
-  
-//   const lines = coverLetterText.split('\n');
-  
-//   for (let line of lines) {
-//     if (pageHeight - fontSize < 0) {
-//       // Create a new page if the remaining height is not enough
-//       currentPage = pdfDoc.addPage(pageSize);
-//       pageHeight = pageSize[1] - 50;
-//     }
-  
-//     while (timesRomanFont.widthOfTextAtSize(line, fontSize) > pageSize[0] - 120) {
-//       // If the text is too wide, split it into two lines
-//       const textWidth = timesRomanFont.widthOfTextAtSize(line, fontSize);
-//       const charsToFit = Math.floor((pageSize[0] - 120) / textWidth * line.length);
-//       const line1 = line.substring(0, charsToFit);
-//       const line2 = line.substring(charsToFit);
-//       line = line1;
-//       currentPage.drawText(line, {
-//         x: 50,
-//         y: pageHeight,
-//         size: fontSize,
-//         font: timesRomanFont,
-//         color: rgb(0, 0, 0),
-//       });
-//       pageHeight -= fontSize;
-//       line = line2;
-//     }
-  
-//     currentPage.drawText(line, {
-//       x: 50,
-//       y: pageHeight,
-//       size: fontSize,
-//       font: timesRomanFont,
-//       color: rgb(0, 0, 0),
-//     });
-  
-//     pageHeight -= fontSize;
-//   }
-
-//         try {
-//           const pdfBytes = await pdfDoc.save();
-//           fs.writeFileSync(filename, pdfBytes);
-
-//           console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
-
-//           await ctx.replyWithDocument(new InputFile(filename));
-//         } catch (error) {
-//           console.error("Error while generating and sending the PDF:", error);
-//           // Handle the error and possibly send an error message to the user
-//         }
-//       }
-
-//     } catch (error) {
-//       console.info(error.stack); // Log the error, including the stack trace
-//       await ctx.reply("Sorry, there was an error generating the cover letter: " + error.message);
-//     }
 
   }
 };
