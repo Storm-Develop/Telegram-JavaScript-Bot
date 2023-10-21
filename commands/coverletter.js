@@ -119,7 +119,7 @@ async function createCoverLetterPDFv2(coverLetterText, filename) {
           },
           styles: styles,
         };
-        Console.log("Generating pdf");
+        console.log("Generating pdf");
         // Create the PDF
         const pdfDoc = pdfMake.createPdf(documentDefinition);
 
