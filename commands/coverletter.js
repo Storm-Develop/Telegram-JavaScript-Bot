@@ -97,12 +97,16 @@ module.exports = {
 
 async function createCoverLetterPDF(coverLetterText, filename) {
         const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([600, 400]);
-
         const timeRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-      
+        const page = pdfDoc.addPage([600, 400]);
+        Console.info("Setting Time Roman font");
+
+        page.setFont(timesRomanFont)
+
         const { width, height } = page.getSize();
         const fontSize = 14;
+        Console.info("Getting text width of the Time Roman font");
+
         const textWidth = timeRomanFont.widthOfTextAtSize(coverLetterText, fontSize);
         const x = (width - textWidth) / 2;
         const y = height - 50;
