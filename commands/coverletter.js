@@ -98,19 +98,22 @@ module.exports = {
 async function createCoverLetterPDF(coverLetterText, filename) {
         const pdfDoc = await PDFDocument.create();
         const page = pdfDoc.addPage([600, 400]);
-        const helveticaFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+
+        const timeRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
       
         const { width, height } = page.getSize();
         const fontSize = 14;
-        const textWidth = helveticaFont.widthOfTextAtSize(coverLetterText, fontSize);
+        const textWidth = timeRomanFont.widthOfTextAtSize(coverLetterText, fontSize);
         const x = (width - textWidth) / 2;
         const y = height - 50;
-      
+        
+        Console.info("Drawing Cover Letter Text");
+
         page.drawText(coverLetterText, {
           x,
           y,
           size: fontSize,
-          font: timesRomanFont,
+          font: utf8Font,
           color: rgb(0, 0, 0), // Text color
         });
       
