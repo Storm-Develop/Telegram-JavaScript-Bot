@@ -129,16 +129,17 @@ async function createCoverLetterPDF(coverLetterText, filename) {
         console.log("Generating pdf");
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-        // Create the PDF
-        const pdfDoc = pdfMake.createPdf(documentDefinition);
-
         try {
-                // Save the PDF to a file
-        pdfDoc.getBuffer((buffer) => {
+          // Create the PDF
+          const pdfDoc = pdfMake.createPdf(documentDefinition);
+          const buffer = await new Promise((resolve, reject) => {
+            pdfDoc.getBuffer((buffer) => {
+              resolve(buffer);
+            });
+          });
+    
           fs.writeFileSync(filename, buffer);
           console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
-        });
-
           await ctx.replyWithDocument(new InputFile(filename));
         } catch (error) {
           console.error("Error while generating and sending the PDF:", error);
