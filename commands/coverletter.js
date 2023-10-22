@@ -84,7 +84,7 @@ module.exports = {
           { role: 'system', content: 'You are a helpful assistant that writes cover letters.' },
           { role: 'user', content: `Job description: ${jobDescriptions}` },
           { role: 'user', content: `Resume: ${resumeDescriptions}` },
-          { role: 'assistant', content: `Write a cover letter based on the job description and resume.` },
+          { role: 'assistant', content: `Write a cover letter based on the job description and resume. Avoid any placeholders.` },
         ],
       // max_tokens:500
       });
