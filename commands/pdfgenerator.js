@@ -8,7 +8,7 @@ module.exports = {
   description: "Generate a PDF document using the provided text.",
   usage: "/generatePDF",
   example: "/generatePDF",
-  category: "PDF Generator",
+  category: "generate PDF",
   handler: async (conversation,ctx) => {    
     try {
             
@@ -34,9 +34,14 @@ module.exports = {
       let pdfFileName = await conversation.wait();
       pdfFileName = pdfFileName + ".pdf";
 
+      let textDescription="";
+      for (let i = 0; i < pdfTextDescriptions.length; i++) {
+         textDescription += pdfTextDescriptions[i];
+      }
+      
       console.info("PDF generation input " + pdfTextDescriptions);
 
-      createPDF(pdfTextDescriptions, pdfFileName);
+      createPDF(textDescription, pdfFileName);
 
       await ctx.reply('Creating a PDF for your text. Please wait.');
 
