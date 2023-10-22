@@ -6,8 +6,8 @@ const pdfFonts = require('pdfmake/build/vfs_fonts');
 module.exports = {
   name: "generatePDF",
   description: "Generate a PDF document using the provided text.",
-  usage: "/generatePDF",
-  example: "/generatePDF",
+  usage: "/generate_pdf",
+  example: "/generate_pdf",
   category: "generate PDF",
   handler: async (conversation,ctx) => {    
     try {
@@ -38,7 +38,7 @@ module.exports = {
       for (let i = 0; i < pdfTextDescriptions.length; i++) {
          textDescription += pdfTextDescriptions[i];
       }
-      
+
       console.info("PDF generation input " + pdfTextDescriptions);
 
       createPDF(textDescription, pdfFileName);
