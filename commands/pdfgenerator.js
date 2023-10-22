@@ -3,8 +3,6 @@ const {InputFile } = require('grammy');
 const pdfMake = require('pdfmake/build/pdfmake')
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
-
-
 module.exports = {
   name: "generatePDF",
   description: "Generate a PDF document using the provided text.",
@@ -34,7 +32,7 @@ module.exports = {
       }
       await ctx.reply('Please provide the desired filename for the PDF file.');
       let pdfFileName = await conversation.wait();
-      pdfFileName = pdfFileName +".pdf";
+      pdfFileName = pdfFileName + ".pdf";
 
       console.info("PDF generation input " + pdfTextDescriptions);
 
@@ -42,8 +40,8 @@ module.exports = {
 
       await ctx.reply('Creating a PDF for your text. Please wait.');
 
-async function createPDF(coverLetterText, filename) {
-        const paragraphs = coverLetterText.split('\n');
+async function createPDF(pdfText, filename) {
+        const paragraphs = pdfText.split('\n');
 
           // Define styles
           const styles = {
