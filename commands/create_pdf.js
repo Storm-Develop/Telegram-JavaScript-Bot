@@ -31,10 +31,10 @@ module.exports = {
         }
       }
       await ctx.reply('Please provide the desired filename for the PDF file.');
-      let fileName = await conversation.wait();
-      const fileNameStr = fileName.message.text+".pdf";
+      let output = await conversation.wait();
+      const fileNameStr = output.message.text+".pdf";
 
-      console.log("PDF file name ")+pdfFileName;
+      console.log("PDF file name ")+fileNameStr;
       
       let textDescription="";
       for (let i = 0; i < pdfTextDescriptions.length; i++) {
