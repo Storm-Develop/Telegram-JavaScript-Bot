@@ -2,7 +2,7 @@ const { Bot, GrammyError, HttpError, Context, session } = require("grammy");
 const { autoQuote } = require("@roziscoding/grammy-autoquote");
 const { freeStorage } = require("@grammyjs/storage-free");
 const coverletterCommand = require('./commands/coverletter');
-const pdfGeneratorCommand = require('./commands/pdfgenerator');
+const createPDFCommand = require('./commands/create_pdf');
 
 const botToken = process.env.BOT_TOKEN;
 const pdfMake = require('pdfmake');
@@ -33,7 +33,7 @@ async function start() {
   //bot.use(session({ initial: createInitialSessionData }));
   bot.use(conversations());
   bot.use(createConversation(coverletter_chat));
-  bot.use(createConversation(pdfgeneration_chat));
+  bot.use(createConversation(create_pdf_chat));
 
   // const commandFilesDir = path.resolve(__dirname, "commands");
   // const commandFiles = fs
@@ -70,8 +70,8 @@ async function start() {
   });
 
   // Register the generate PDF command
-  bot.command(pdfGeneratorCommand.name, async (ctx) => {
-    await ctx.conversation.enter("pdfgeneration_chat");
+  bot.command(createPDFCommand.name, async (ctx) => {
+    await ctx.conversation.enter("create_pdf_chat");
   });
 
   /** Defines the conversation cover letter*/
@@ -80,8 +80,8 @@ async function start() {
   }
 
     /** Defines the pdf generation chat*/
-  async function pdfgeneration_chat(conversation, ctx) {
-      await pdfGeneratorCommand.handler(conversation,ctx);
+  async function create_pdf_chat(conversation, ctx) {
+      await createPDFCommand.handler(conversation,ctx);
   }
 
   bot.catch((err) => {

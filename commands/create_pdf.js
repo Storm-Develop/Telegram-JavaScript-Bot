@@ -4,15 +4,15 @@ const pdfMake = require('pdfmake/build/pdfmake')
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
 module.exports = {
-  name: "generatePDF",
+  name: "create_pdf",
   description: "Generate a PDF document using the provided text.",
-  usage: "/generate_pdf",
-  example: "/generate_pdf",
-  category: "generate PDF",
+  usage: "/create_pdf",
+  example: "/create_pdf",
+  category: "Create PDF",
   handler: async (conversation,ctx) => {    
     try {
             
-      await ctx.reply('Welcome! Please enter the text you want to generate PDF for.');
+      await ctx.reply('Welcome! Please enter the text you want to create PDF for.');
 
       const pdfTextDescriptions = [];
 
