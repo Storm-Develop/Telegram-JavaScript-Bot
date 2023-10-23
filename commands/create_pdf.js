@@ -32,13 +32,14 @@ module.exports = {
       }
       await ctx.reply('Please provide the desired filename for the PDF file.');
       let fileName = await conversation.wait();
+      const fileNameStr = fileName.message.text;
       let pdfFileName ="";
-      if (fileName.message.text.includes(".pdf"))
+      if (fileNameStr.includes(".pdf"))
       {
         pdfFileName = fileName + ".pdf";
       }
       else{
-        pdfFileName = fileName.message.text;
+        pdfFileName = fileNameStr;
       }
       console.log("PDF file name ")+pdfFileName;
       
