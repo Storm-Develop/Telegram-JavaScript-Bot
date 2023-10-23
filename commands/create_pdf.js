@@ -40,7 +40,8 @@ module.exports = {
       else{
         pdfFileName = fileName.message.text;
       }
-
+      console.log("PDF file name ")+pdfFileName;
+      
       let textDescription="";
       for (let i = 0; i < pdfTextDescriptions.length; i++) {
          textDescription += pdfTextDescriptions[i];
