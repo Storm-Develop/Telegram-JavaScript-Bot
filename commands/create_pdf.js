@@ -32,9 +32,16 @@ module.exports = {
       }
       await ctx.reply('Please provide the desired filename for the PDF file.');
       let output = await conversation.wait();
-      const fileNameStr = output.message.text+".pdf";
-
-      console.log("PDF file name ")+fileNameStr;
+      const outputStr = output.message.text;
+      let pdfFileName ="";
+      if (outputStr.includes(".pdf"))
+      {
+        pdfFileName = outputStr + ".pdf";
+      }
+      else{
+        pdfFileName = outputStr;
+      }
+      console.log("PDF file name ")+pdfFileName;
       
       let textDescription="";
       for (let i = 0; i < pdfTextDescriptions.length; i++) {
@@ -43,7 +50,7 @@ module.exports = {
 
       console.info("PDF generation input " + pdfTextDescriptions);
 
-      createPDF(textDescription, fileNameStr);
+      createPDF(textDescription, pdfFileName);
 
       await ctx.reply('Creating a PDF for your text. Please wait.');
 
