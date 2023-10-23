@@ -34,7 +34,7 @@ module.exports = {
       let output = await conversation.wait();
       const outputStr = output.message.text;
       let pdfFileName ="";
-      if (outputStr.includes(".pdf"))
+      if (!outputStr.includes(".pdf"))
       {
         pdfFileName = outputStr + ".pdf";
       }
