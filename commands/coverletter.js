@@ -79,7 +79,7 @@ module.exports = {
 
       // Define the parameters for generating a completion
       const response = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4.0',
         messages: [
           { role: 'system', content: 'You are a helpful assistant that writes cover letters.' },
           { role: 'user', content: `Job description: ${jobDescriptions}` },
