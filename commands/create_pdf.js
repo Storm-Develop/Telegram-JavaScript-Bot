@@ -32,14 +32,14 @@ module.exports = {
       }
       await ctx.reply('Please provide the desired filename for the PDF file.');
       let fileName = await conversation.wait();
-      //let pdfFileName ="";
-      // if (fileName.message.text.includes(".pdf"))
-      // {
-      //   pdfFileName = fileName + ".pdf";
-      // }
-      // else{
-      //   pdfFileName = fileName;
-      // }
+      let pdfFileName ="";
+      if (fileName.message.text.includes(".pdf"))
+      {
+        pdfFileName = fileName + ".pdf";
+      }
+      else{
+        pdfFileName = fileName.message.text;
+      }
 
       let textDescription="";
       for (let i = 0; i < pdfTextDescriptions.length; i++) {
@@ -48,7 +48,7 @@ module.exports = {
 
       console.info("PDF generation input " + pdfTextDescriptions);
 
-      createPDF(textDescription, fileName.message.text);
+      createPDF(textDescription, pdfFileName);
 
       await ctx.reply('Creating a PDF for your text. Please wait.');
 
