@@ -5,7 +5,7 @@ const pdfFonts = require('pdfmake/build/vfs_fonts');
 
 module.exports = {
   name: "create_pdf",
-  description: "Generate a PDF document using the provided text.",
+  description: "Create a PDF document using the provided text.",
   usage: "/create_pdf",
   example: "/create_pdf",
   category: "Create PDF",
@@ -31,8 +31,15 @@ module.exports = {
         }
       }
       await ctx.reply('Please provide the desired filename for the PDF file.');
-      let pdfFileName = await conversation.wait();
-      pdfFileName = pdfFileName + ".pdf";
+      let fileName = await conversation.wait();
+      //let pdfFileName ="";
+      // if (fileName.message.text.includes(".pdf"))
+      // {
+      //   pdfFileName = fileName + ".pdf";
+      // }
+      // else{
+      //   pdfFileName = fileName;
+      // }
 
       let textDescription="";
       for (let i = 0; i < pdfTextDescriptions.length; i++) {
@@ -41,7 +48,7 @@ module.exports = {
 
       console.info("PDF generation input " + pdfTextDescriptions);
 
-      createPDF(textDescription, pdfFileName);
+      createPDF(textDescription, fileName.message.text);
 
       await ctx.reply('Creating a PDF for your text. Please wait.');
 
