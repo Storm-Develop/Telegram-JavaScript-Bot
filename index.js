@@ -32,30 +32,11 @@ async function start() {
     initial: () => ({ }),
     storage: freeStorage(botToken),
   }));
-  //bot.use(session({ initial: createInitialSessionData }));
   bot.use(conversations());
   bot.use(createConversation(coverletter_chat));
   bot.use(createConversation(create_pdf_chat));
 
-  // const commandFilesDir = path.resolve(__dirname, "commands");
-  // const commandFiles = fs
-  //   .readdirSync(commandFilesDir)
-  //   .filter((file) => file.endsWith(".js"));
 
-  // for (const file of commandFiles) {
-  //   const command = require(path.join(commandFilesDir, file));
-  //   bot.command(command.name, async (ctx) => {
-  //     await command.handler(ctx);
-  //   });
-
-  //   if (command.alias) {
-  //     for (const alias of command.alias) {
-  //       bot.command(alias, async (ctx) => {
-  //         await command.handler(ctx);
-  //       });
-  //     }
-  //   }
-  // }
 
   bot.command("cancel", async (ctx) => {
     await ctx.conversation.exit();
@@ -63,7 +44,11 @@ async function start() {
   });
 
   bot.command("start", (ctx) => {
-    ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!");
+    ctx.reply(
+      'Welcome to the GetHiredBot!\\n' + 
+      'I use the latest Open AI model to help you get your next position.\\n' + 
+      'Run the /help command to see what I can do!'
+  );
 });
 
   bot.command(helpCommand.name, async (ctx) =>{

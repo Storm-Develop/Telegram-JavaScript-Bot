@@ -45,21 +45,18 @@ module.exports = {
       else{
         pdfFileName = outputStr;
       }
-      console.log("PDF file name ")+pdfFileName;
+     // console.log("PDF file name ")+pdfFileName;
       
       let textDescription="";
       for (let i = 0; i < pdfTextDescriptions.length; i++) {
          textDescription += pdfTextDescriptions[i];
       }
 
-      console.info("PDF generation input " + pdfTextDescriptions);
+    //  console.info("PDF generation input " + pdfTextDescriptions);
 
       await ctx.reply('Creating a PDF for your text. Please wait.');
 
       createPDF(textDescription, pdfFileName);
-
-      await ctx.reply('Thank you for using our service! To support our server costs and further development, please consider donating. Click on the link: [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=PV7HABMM9S54S)', { parse_mode: 'MarkdownV2' });  
-
 
 async function createPDF(pdfText, filename) {
         const paragraphs = pdfText.split('\n');
@@ -84,7 +81,7 @@ async function createPDF(pdfText, filename) {
           content: content,
           styles: styles,
         };
-        console.log("Generating pdf");
+     //   console.log("Generating pdf");
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
         try {
@@ -97,16 +94,16 @@ async function createPDF(pdfText, filename) {
           });
     
           fs.writeFileSync(filename, buffer);
-          console.info(`PDF  generation completed. File saved as ${filename}`);
+        //  console.info(`PDF  generation completed. File saved as ${filename}`);
           await ctx.replyWithDocument(new InputFile(filename));
         } catch (error) {
-          console.error("Error while generating and sending the PDF:", error);
+        //  console.error("Error while generating and sending the PDF:", error);
           // Handle the error and possibly send an error message to the user
         }
       }
 
     } catch (error) {
-      console.info(error.stack); // Log the error, including the stack trace
+      //console.info(error.stack); // Log the error, including the stack trace
       await ctx.reply("Sorry, there was an error generating the pdf file" + error.message);
     }
   }

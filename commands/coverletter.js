@@ -40,7 +40,7 @@ module.exports = {
           await ctx.reply("If you have completed your input, please type 'done' to continue.");
         }
       }
-      console.info("Job Description " + jobDescriptions);
+      //console.info("Job Description " + jobDescriptions);
 
       await ctx.reply('Please enter your resume.');
 
@@ -65,7 +65,7 @@ module.exports = {
         }
       }
 
-      console.info("Resume Description " + resumeDescriptions);
+      //console.info("Resume Description " + resumeDescriptions);
 
       await ctx.reply('Generating the cover letter. Please wait');
 
@@ -80,7 +80,7 @@ module.exports = {
         ],
       // max_tokens:500
       });
-      console.log(response.choices);
+      //console.log(response.choices);
 
       // Get the generated cover letter from the API response
       const coverLetter = response.choices[0].message.content;
@@ -115,7 +115,7 @@ async function createCoverLetterPDF(coverLetterText, filename) {
           content: content,
           styles: styles,
         };
-        console.log("Generating pdf");
+        //console.log("Generating pdf");
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
         try {
@@ -128,9 +128,8 @@ async function createCoverLetterPDF(coverLetterText, filename) {
           });
     
           fs.writeFileSync(filename, buffer);
-          console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
+          //console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
           await ctx.replyWithDocument(new InputFile(filename));
-          await ctx.reply('Thank you for using our service! To support our server costs and further development, please consider donating. Click on the link: [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=PV7HABMM9S54S)', { parse_mode: 'MarkdownV2' });  
         } catch (error) {
           console.error("Error while generating and sending the PDF:", error);
           // Handle the error and possibly send an error message to the user
@@ -141,6 +140,5 @@ async function createCoverLetterPDF(coverLetterText, filename) {
       console.info(error.stack); // Log the error, including the stack trace
       await ctx.reply("Sorry, there was an error generating the cover letter: " + error.message);
     }
-
   }
 };
