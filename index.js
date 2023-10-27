@@ -44,8 +44,8 @@ async function start() {
 
   bot.command("start", (ctx) => {
     ctx.reply(
-      'Welcome to the GetHiredBot!\n' + 
-      'I use the latest Open AI model to help you get your next position.\n' + 
+      'Welcome to the GetHiredBot!\n\n' + 
+      'I use the latest Open AI model to help you get your next position.\n\n' + 
       'Run the /help command to see what I can do!'
   );
 });
