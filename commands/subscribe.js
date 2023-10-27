@@ -7,7 +7,9 @@ module.exports = {
   category: "Support",
   handler: async (ctx) => {           
     await ctx.reply(
-      '📢 Looking for updates or keen to share feedback about GetHiredBot?\\n Subscribe to our official channel: @gethiredchannel! \\n Stay informed and help us shape the future of job hunting. 🚀'
+      '📢 Looking for updates or keen to share feedback about GetHiredBot?\\n'+
+      'Subscribe to our official channel: @gethiredchannel!\\n'+
+      'Stay informed and help us shape the future of job hunting. 🚀'
   );
   }
 };
