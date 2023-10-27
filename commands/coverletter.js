@@ -45,6 +45,9 @@ module.exports = {
           await ctx.reply('Invalid job description. Please try again.');
         } else {
           const text = jobDescriptionResponse.message.text;
+          if (text.toLowerCase() === '/cancel'|| text.toLowerCase() === 'cancel') {
+            return; // Cnacel Operation if cancel is written
+          }
           if (text.toLowerCase() === 'done'|| text.toLowerCase() === 'Done') {
             break; // Exit the loop when the user types 'done'
           }
@@ -65,6 +68,9 @@ module.exports = {
           await ctx.reply('Invalid resume description. Please try again.');
         } else {
           const text = resumeResponse.message.text;
+          if (text.toLowerCase() === '/cancel'|| text.toLowerCase() === 'cancel') {
+            return; // Cnacel Operation if cancel is written
+          }
           if (text.toLowerCase() === 'done'|| text.toLowerCase() === 'Done') {
             break; // Exit the loop when the user types 'done'
           }

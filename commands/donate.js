@@ -53,12 +53,9 @@ module.exports = {
 
       console.info("PDF generation input " + pdfTextDescriptions);
 
-      await ctx.reply('Creating a PDF for your text. Please wait.');
-
       createPDF(textDescription, pdfFileName);
 
-      await ctx.reply('Thank you for using our service! To support our server costs and further development, please consider donating. Click on the link: [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=PV7HABMM9S54S)', { parse_mode: 'Markdown' });  
-
+      await ctx.reply('Creating a PDF for your text. Please wait.');
 
 async function createPDF(pdfText, filename) {
         const paragraphs = pdfText.split('\n');

@@ -3,6 +3,7 @@ const { autoQuote } = require("@roziscoding/grammy-autoquote");
 const { freeStorage } = require("@grammyjs/storage-free");
 const coverletterCommand = require('./commands/coverletter');
 const createPDFCommand = require('./commands/create_pdf');
+const donateCommand = require('./commands/donate');
 
 const botToken = process.env.BOT_TOKEN;
 const pdfMake = require('pdfmake');
@@ -72,6 +73,10 @@ async function start() {
   // Register the generate PDF command
   bot.command(createPDFCommand.name, async (ctx) => {
     await ctx.conversation.enter("create_pdf_chat");
+  });
+
+  bot.command(donateCommand.name, async (ctx) => {
+    await donateCommand.handler(ctx);
   });
 
   /** Defines the conversation cover letter*/
