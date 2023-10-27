@@ -144,6 +144,7 @@ async function createCoverLetterPDF(coverLetterText, filename) {
           fs.writeFileSync(filename, buffer);
           console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
           await ctx.replyWithDocument(new InputFile(filename));
+          await ctx.reply('Thank you for using our service! To support our server costs and further development, please consider donating. Click on the link: [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=PV7HABMM9S54S)', { parse_mode: 'Markdown' });
         } catch (error) {
           console.error("Error while generating and sending the PDF:", error);
           // Handle the error and possibly send an error message to the user

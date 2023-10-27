@@ -4,6 +4,7 @@ const { freeStorage } = require("@grammyjs/storage-free");
 const coverletterCommand = require('./commands/coverletter');
 const createPDFCommand = require('./commands/create_pdf');
 const donateCommand = require('./commands/donate');
+const helpCommand = require('./commands/help');
 
 const botToken = process.env.BOT_TOKEN;
 const pdfMake = require('pdfmake');
@@ -58,12 +59,16 @@ async function start() {
 
   bot.command("cancel", async (ctx) => {
     await ctx.conversation.exit();
-    await ctx.reply("Leaving.");
+    await ctx.reply("Cancelling the operation.");
   });
 
-  bot.command("start", (ctx) =>
-    ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!")
-  );
+  bot.command("start", (ctx) => {
+    ctx.reply("Hello!\n\n" + "Run the /help command to see what I can do!");
+});
+
+  bot.command(helpCommand.name, async (ctx) =>{
+      await donateCommand.handler(ctx);
+   });
 
   // Register the coverletter command
   bot.command(coverletterCommand.name, async (ctx) => {
