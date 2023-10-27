@@ -1,6 +1,6 @@
 
 module.exports = {
-  name: "donate",
+  name: "subscribe",
   description: "Join our channel @gethiredchannel for the latest GetHiredBot updates and provide feedback to help us improve.",
   usage: "/subscribe",
   example: "/subscribe",
