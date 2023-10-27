@@ -5,14 +5,12 @@ const pdfMake = require('pdfmake/build/pdfmake')
 //const pdfFonts=require('pdfmake/build/vfs_fonts')
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
-
-
 module.exports = {
   name: "coverletter",
   description: "Generate a cover letter response using your resume as a reference.",
   usage: "/coverletter",
   example: "/coverletter",
-  category: "Cover Letter",
+  category: "CoverLetter",
   handler: async (conversation,ctx) => {    
     try {
       // Create an instance of the OpenAI API

@@ -8,7 +8,7 @@ module.exports = {
   description: "Create a PDF document using the provided text.",
   usage: "/create_pdf",
   example: "/create_pdf",
-  category: "Create PDF",
+  category: "PDF",
   handler: async (conversation,ctx) => {    
     try {
             
@@ -58,7 +58,7 @@ module.exports = {
 
       createPDF(textDescription, pdfFileName);
 
-      await ctx.reply('Thank you for using our service! To support our server costs and further development, please consider donating. Click on the link: [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=PV7HABMM9S54S)', { parse_mode: 'Markdown' });  
+      await ctx.reply('Thank you for using our service! To support our server costs and further development, please consider donating. Click on the link: [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=PV7HABMM9S54S)', { parse_mode: 'MarkdownV2' });  
 
 
 async function createPDF(pdfText, filename) {
