@@ -5,6 +5,7 @@ const coverletterCommand = require('./commands/coverletter');
 const createPDFCommand = require('./commands/create_pdf');
 const donateCommand = require('./commands/donate');
 const helpCommand = require('./commands/help');
+const subscribeCommand = require('./commands/subscribe');
 
 const botToken = process.env.BOT_TOKEN;
 const pdfMake = require('pdfmake');
@@ -36,8 +37,6 @@ async function start() {
   bot.use(createConversation(coverletter_chat));
   bot.use(createConversation(create_pdf_chat));
 
-
-
   bot.command("cancel", async (ctx) => {
     await ctx.conversation.exit();
     await ctx.reply("The operation has been cancelled.");
@@ -50,6 +49,10 @@ async function start() {
       'Run the /help command to see what I can do!'
   );
 });
+
+  bot.command(subscribeCommand.name, async (ctx) =>{
+    await subscribeCommand.handler(ctx);
+  });
 
   bot.command(helpCommand.name, async (ctx) =>{
       await helpCommand.handler(ctx);
