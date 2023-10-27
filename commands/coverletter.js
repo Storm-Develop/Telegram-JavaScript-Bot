@@ -19,20 +19,6 @@ module.exports = {
       const openai = new OpenAI({
         apiKey: process.env.OPENAI_TOKEN // This is also the default, can be omitted
       });
-
-      // await ctx.reply('Welcome! Please enter the job posting description.');
-
-      // Start a conversation
-
-      // Wait for the user to send the job posting description
-      // const userResponse  = await conversation.wait();
-      // if (!userResponse || !userResponse.message || !userResponse.message.text) {
-      //   await ctx.reply('Invalid job posting description. Please try again.');
-      //   return;
-      // }
-      // console.info(userResponse.message);
-
-      // const jobPostingDescription = userResponse.message.text;
             
       await ctx.reply('Welcome! Please enter the job posting description.');
 
@@ -46,6 +32,7 @@ module.exports = {
         } else {
           const text = jobDescriptionResponse.message.text;
           if (text.toLowerCase() === '/cancel'|| text.toLowerCase() === 'cancel') {
+            await ctx.reply("The operation has been cancelled.");
             return; // Cnacel Operation if cancel is written
           }
           if (text.toLowerCase() === 'done'|| text.toLowerCase() === 'Done') {
@@ -69,6 +56,7 @@ module.exports = {
         } else {
           const text = resumeResponse.message.text;
           if (text.toLowerCase() === '/cancel'|| text.toLowerCase() === 'cancel') {
+            await ctx.reply("The operation has been cancelled.");
             return; // Cnacel Operation if cancel is written
           }
           if (text.toLowerCase() === 'done'|| text.toLowerCase() === 'Done') {
@@ -144,7 +132,7 @@ async function createCoverLetterPDF(coverLetterText, filename) {
           fs.writeFileSync(filename, buffer);
           console.info(`PDF Cover letter generation completed. File saved as ${filename}`);
           await ctx.replyWithDocument(new InputFile(filename));
-          await ctx.reply('Thank you for using our service! To support our server costs and further development, please consider donating. Click on the link: [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=PV7HABMM9S54S)', { parse_mode: 'Markdown' });
+          await ctx.reply('Thank you for using our service! To support our server costs and further development, please consider donating. Click on the link: [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=PV7HABMM9S54S)', { parse_mode: 'MarkdownV2' });  
         } catch (error) {
           console.error("Error while generating and sending the PDF:", error);
           // Handle the error and possibly send an error message to the user

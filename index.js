@@ -59,7 +59,7 @@ async function start() {
 
   bot.command("cancel", async (ctx) => {
     await ctx.conversation.exit();
-    await ctx.reply("Cancelling the operation.");
+    await ctx.reply("The operation has been cancelled.");
   });
 
   bot.command("start", (ctx) => {

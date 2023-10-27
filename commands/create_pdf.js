@@ -24,6 +24,7 @@ module.exports = {
         } else {
           const text = pdfDescriptionResponse.message.text;
           if (text.toLowerCase() === '/cancel'|| text.toLowerCase() === 'cancel') {
+            await ctx.reply("The operation has been cancelled.");
             return; // Cnacel Operation if cancel is written
           }
           if (text.toLowerCase() === 'done'|| text.toLowerCase() === 'Done') {
