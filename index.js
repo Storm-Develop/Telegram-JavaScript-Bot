@@ -67,7 +67,7 @@ async function start() {
 });
 
   bot.command(helpCommand.name, async (ctx) =>{
-      await donateCommand.handler(ctx);
+      await helpCommand.handler(ctx);
    });
 
   // Register the coverletter command
